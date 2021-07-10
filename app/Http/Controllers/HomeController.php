@@ -15,7 +15,9 @@ use App\Account;
 use App\Product_Sale;
 use App\Customer;
 use DB;
+
 use Auth;
+
 
 class HomeController extends Controller
 {

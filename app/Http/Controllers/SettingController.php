@@ -45,6 +45,7 @@ class SettingController extends Controller
             $zones_array[$key]['zone'] = $zone;
             $zones_array[$key]['diff_from_GMT'] = 'UTC/GMT ' . date('P', $timestamp);
         }
+        
         return view('setting.general_setting', compact('lims_general_setting_data', 'lims_account_list', 'zones_array', 'lims_currency_list'));
     }
 
@@ -63,7 +64,7 @@ class SettingController extends Controller
         $path =app()->environmentFilePath();
         $searchArray = array('APP_TIMEZONE='.env('APP_TIMEZONE'));
         $replaceArray = array('APP_TIMEZONE='.$data['timezone']);
-
+        dd(env('APP_TIMEZONE'));
         file_put_contents($path, str_replace($searchArray, $replaceArray, file_get_contents($path)));
 
         $general_setting = GeneralSetting::latest()->first();
