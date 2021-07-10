@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                         <label><?php echo e(trans('file.Time Zone')); ?></label>
                                         <?php if($lims_general_setting_data): ?>
-                                        <input type="hidden" name="timezone_hidden" value="<?php echo e(.env('APP_TIMEZONE')); ?>">
+                                        <input type="hidden" name="timezone_hidden" value="<?php echo e(env('APP_TIMEZONE')); ?>">
                                         <?php endif; ?>
                                         <select name="timezone" class="selectpicker form-control" data-live-search="true" title="Select TimeZone...">
                                             <?php $__currentLoopData = $zones_array; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $zone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
