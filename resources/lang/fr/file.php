@@ -162,7 +162,7 @@ return [
 	"Operator" => "Opérateur",
 	"Operation Value" => "Valeur d'opération",
 	"Rate" => "Taux",
-	"General Setting" => "Cadre général",
+	"General Setting" => "Réglages généraux",
 	"Site Title" => "Titre du site",
 	"Site Logo" => "Logo du site",
 	"Current Password" => "Mot de passe actuel",

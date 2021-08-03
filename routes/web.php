@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 	Route::get('products/product_warehouse/{id}', 'ProductController@productWarehouseData');
 	Route::post('importproduct', 'ProductController@importProduct')->name('product.import');
 	Route::post('exportproduct', 'ProductController@exportProduct')->name('product.export');
-	Route::get('products/print_barcode','ProductController@printBarcode')->name('product.printBarcode');
+
 	
 	Route::get('products/lims_product_search', 'ProductController@limsProductSearch')->name('product.search');
 	Route::post('products/deletebyselection', 'ProductController@deleteBySelection');
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 
 	Route::post('sales/sale-data', 'SaleController@saleData');
 	Route::post('sales/sendmail', 'SaleController@sendMail')->name('sale.sendmail');
-	Route::get('sales/sale_by_csv', 'SaleController@saleByCsv');
+	// Route::get('sales/sale_by_csv', 'SaleController@saleByCsv');
 	Route::get('sales/product_sale/{id}','SaleController@productSaleData');
 	Route::post('importsale', 'SaleController@importSale')->name('sale.import');
 	Route::get('pos', 'SaleController@posSale')->name('sale.pos');
@@ -120,15 +120,7 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 	Route::get('sales/today-profit/{warehouse_id}', 'SaleController@todayProfit');
 	Route::resource('sales', 'SaleController');
 
-	Route::get('delivery', 'DeliveryController@index')->name('delivery.index');
-	Route::get('delivery/product_delivery/{id}','DeliveryController@productDeliveryData');
-	Route::get('delivery/create/{id}', 'DeliveryController@create');
-	Route::post('delivery/store', 'DeliveryController@store')->name('delivery.store');
-	Route::post('delivery/sendmail', 'DeliveryController@sendMail')->name('delivery.sendMail');
-	Route::get('delivery/{id}/edit', 'DeliveryController@edit');
-	Route::post('delivery/update', 'DeliveryController@update')->name('delivery.update');
-	Route::post('delivery/deletebyselection', 'DeliveryController@deleteBySelection');
-	Route::post('delivery/delete/{id}', 'DeliveryController@delete')->name('delivery.delete');
+
 
 	Route::get('quotations/product_quotation/{id}','QuotationController@productQuotationData');
 	Route::get('quotations/lims_product_search', 'QuotationController@limsProductSearch')->name('product_quotation.search');
@@ -147,13 +139,13 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 	Route::get('purchases/getpayment/{id}', 'PurchaseController@getPayment')->name('purchase.get-payment');
 	Route::post('purchases/updatepayment', 'PurchaseController@updatePayment')->name('purchase.update-payment');
 	Route::post('purchases/deletepayment', 'PurchaseController@deletePayment')->name('purchase.delete-payment');
-	Route::get('purchases/purchase_by_csv', 'PurchaseController@purchaseByCsv');
+	// Route::get('purchases/purchase_by_csv', 'PurchaseController@purchaseByCsv');
 	Route::post('importpurchase', 'PurchaseController@importPurchase')->name('purchase.import');
 	Route::post('purchases/deletebyselection', 'PurchaseController@deleteBySelection');
 	Route::resource('purchases', 'PurchaseController');
 
 	Route::get('transfers/product_transfer/{id}','TransferController@productTransferData');
-	Route::get('transfers/transfer_by_csv', 'TransferController@transferByCsv');
+	// Route::get('transfers/transfer_by_csv', 'TransferController@transferByCsv');
 	Route::post('importtransfer', 'TransferController@importTransfer')->name('transfer.import');
 	Route::get('transfers/getproduct/{id}', 'TransferController@getProduct')->name('transfer.getproduct');
 	Route::get('transfers/lims_product_search', 'TransferController@limsProductSearch')->name('product_transfer.search');
@@ -236,14 +228,8 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 	Route::post('expenses/deletebyselection', 'ExpenseController@deleteBySelection');
 	Route::resource('expenses', 'ExpenseController');
 
-	Route::get('gift_cards/gencode', 'GiftCardController@generateCode');
-	Route::post('gift_cards/recharge/{id}', 'GiftCardController@recharge')->name('gift_cards.recharge');
-	Route::post('gift_cards/deletebyselection', 'GiftCardController@deleteBySelection');
-	Route::resource('gift_cards', 'GiftCardController');
 
-	Route::get('coupons/gencode', 'CouponController@generateCode');
-	Route::post('coupons/deletebyselection', 'CouponController@deleteBySelection');
-	Route::resource('coupons', 'CouponController');
+
 	//accounting routes
 	Route::get('accounts/make-default/{id}', 'AccountsController@makeDefault');
 	Route::get('accounts/balancesheet', 'AccountsController@balanceSheet')->name('accounts.balancesheet');
@@ -262,11 +248,6 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 
 	Route::post('attendance/deletebyselection', 'AttendanceController@deleteBySelection');
 	Route::resource('attendance', 'AttendanceController');
-
-	Route::resource('stock-count', 'StockCountController');
-	Route::post('stock-count/finalize', 'StockCountController@finalize')->name('stock-count.finalize');
-	Route::get('stock-count/stockdif/{id}', 'StockCountController@stockDif');
-	Route::get('stock-count/{id}/qty_adjustment', 'StockCountController@qtyAdjustment')->name('stock-count.adjustment');
 
 	Route::post('holidays/deletebyselection', 'HolidayController@deleteBySelection');
 	Route::get('approve-holiday/{id}', 'HolidayController@approveHoliday')->name('approveHoliday');

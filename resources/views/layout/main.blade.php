@@ -110,17 +110,9 @@
                       ['role_id', $role->id]
                   ])->first();
 
-                  $print_barcode = DB::table('permissions')->where('name', 'print_barcode')->first();
-                      $print_barcode_active = DB::table('role_has_permissions')->where([
-                          ['permission_id', $print_barcode->id],
-                          ['role_id', $role->id]
-                      ])->first();
 
-                  $stock_count = DB::table('permissions')->where('name', 'stock_count')->first();
-                      $stock_count_active = DB::table('role_has_permissions')->where([
-                          ['permission_id', $stock_count->id],
-                          ['role_id', $role->id]
-                      ])->first();
+
+
 
                     $adjustment = DB::table('permissions')->where('name', 'adjustment')->first();
                     $adjustment_active = DB::table('role_has_permissions')->where([
@@ -128,7 +120,7 @@
                         ['role_id', $role->id]
                     ])->first();
               ?>
-              @if($category_permission_active || $index_permission_active || $print_barcode_active || $stock_count_active || $adjustment_active)
+              @if($category_permission_active || $index_permission_active )
               <li><a href="#product" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-list"></i><span>{{__('file.product')}}</span><span></a>
                 <ul id="product" class="collapse list-unstyled ">
                   @if($category_permission_active)
@@ -147,16 +139,12 @@
                   <li id="product-create-menu"><a href="{{route('products.create')}}">{{__('file.add_product')}}</a></li>
                   @endif
                   @endif
-                  @if($print_barcode_active)
-                  <li id="printBarcode-menu"><a href="{{route('product.printBarcode')}}">{{__('file.print_barcode')}}</a></li>
-                  @endif
+
                   @if($adjustment_active)
                     <li id="adjustment-list-menu"><a href="{{route('qty_adjustment.index')}}">{{trans('file.Adjustment List')}}</a></li>
                     <li id="adjustment-create-menu"><a href="{{route('qty_adjustment.create')}}">{{trans('file.Add Adjustment')}}</a></li>
                   @endif
-                  @if($stock_count_active)
-                    <li id="stock-count-menu"><a href="{{route('stock-count.index')}}">{{trans('file.Stock Count')}}</a></li>
-                  @endif
+
                 </ul>
               </li>
               @endif
@@ -180,7 +168,7 @@
                   ?>
                   @if($add_permission_active)
                   <li id="purchase-create-menu"><a href="{{route('purchases.create')}}">{{trans('file.Add Purchase')}}</a></li>
-                  <li id="purchase-import-menu"><a href="{{url('purchases/purchase_by_csv')}}">{{trans('file.Import Purchase By CSV')}}</a></li>
+
                   @endif
                 </ul>
               </li>
@@ -192,23 +180,7 @@
                         ['role_id', $role->id]
                     ])->first();
 
-                $gift_card_permission = DB::table('permissions')->where('name', 'gift_card')->first();
-                $gift_card_permission_active = DB::table('role_has_permissions')->where([
-                        ['permission_id', $gift_card_permission->id],
-                        ['role_id', $role->id]
-                    ])->first();
-
-                $coupon_permission = DB::table('permissions')->where('name', 'coupon')->first();
-                $coupon_permission_active = DB::table('role_has_permissions')->where([
-                        ['permission_id', $coupon_permission->id],
-                        ['role_id', $role->id]
-                    ])->first();
-
-                $delivery_permission_active = DB::table('permissions')
-                      ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
-                      ->where([
-                        ['permissions.name', 'delivery'],
-                        ['role_id', $role->id] ])->first();
+                
 
                 $sale_add_permission = DB::table('permissions')->where('name', 'sales-add')->first();
                 $sale_add_permission_active = DB::table('role_has_permissions')->where([
@@ -216,7 +188,7 @@
                     ['role_id', $role->id]
                 ])->first();
               ?>
-              @if($sale_index_permission_active || $gift_card_permission_active || $coupon_permission_active || $delivery_permission_active)
+              @if($sale_index_permission_active  || $coupon_permission_active || $delivery_permission_active)
               <li><a href="#sale" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-cart"></i><span>{{trans('file.Sale')}}</span></a>
                 <ul id="sale" class="collapse list-unstyled ">
                   @if($sale_index_permission_active)
@@ -224,19 +196,11 @@
                     @if($sale_add_permission_active)
                     <li><a href="{{route('sale.pos')}}">POS</a></li>
                     <li id="sale-create-menu"><a href="{{route('sales.create')}}">{{trans('file.Add Sale')}}</a></li>
-                    <li id="sale-import-menu"><a href="{{url('sales/sale_by_csv')}}">{{trans('file.Import Sale By CSV')}}</a></li>
+
                     @endif
                   @endif
 
-                  @if($gift_card_permission_active)
-                  <li id="gift-card-menu"><a href="{{route('gift_cards.index')}}">{{trans('file.Gift Card List')}}</a> </li>
-                  @endif
-                  @if($coupon_permission_active)
-                  <li id="coupon-menu"><a href="{{route('coupons.index')}}">{{trans('file.Coupon List')}}</a> </li>
-                  @endif
-                  @if($delivery_permission_active)
-                  <li id="delivery-menu"><a href="{{route('delivery.index')}}">{{trans('file.Delivery List')}}</a></li>
-                  @endif
+
                 </ul>
               </li>
               @endif
@@ -309,9 +273,7 @@
                     ])->first();
                   ?>
                   @if($add_permission_active)
-                  <li id="transfer-create-menu"><a href="{{route('transfers.create')}}">{{trans('file.Add Transfer')}}</a></li>
-                  <li id="transfer-import-menu"><a href="{{url('transfers/transfer_by_csv')}}">{{trans('file.Import Transfer By CSV')}}</a></li>
-                  @endif
+                  <li id="transfer-create-menu"><a href="{{route('transfers.create')}}">{{trans('file.Add Transfer')}}</a></li>                 @endif
                 </ul>
               </li>
               @endif
@@ -935,43 +897,10 @@
                             <a href="{{ url('language_switch/en') }}" class="btn btn-link"> English</a>
                           </li>
                           <li>
-                            <a href="{{ url('language_switch/es') }}" class="btn btn-link"> Español</a>
-                          </li>
-                          <li>
                             <a href="{{ url('language_switch/ar') }}" class="btn btn-link"> عربى</a>
                           </li>
                           <li>
-                            <a href="{{ url('language_switch/pt_BR') }}" class="btn btn-link"> Portuguese</a>
-                          </li>
-                          <li>
                             <a href="{{ url('language_switch/fr') }}" class="btn btn-link"> Français</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/de') }}" class="btn btn-link"> Deutsche</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/id') }}" class="btn btn-link"> Malay</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/hi') }}" class="btn btn-link"> हिंदी</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/vi') }}" class="btn btn-link"> Tiếng Việt</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/ru') }}" class="btn btn-link"> русский</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/tr') }}" class="btn btn-link"> Türk</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/it') }}" class="btn btn-link"> Italiano</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/nl') }}" class="btn btn-link"> Nederlands</a>
-                          </li>
-                          <li>
-                            <a href="{{ url('language_switch/lao') }}" class="btn btn-link"> Lao</a>
                           </li>
                       </ul>
                 </li>

@@ -72,10 +72,10 @@ class CustomerController extends Controller
                     }),
                 ],
             ]);
-
-            $lims_customer_data['phone'] = $lims_customer_data['phone_number'];
+            $lims_customer_data['phone'] ='0666666666';
+            $lims_customer_data['phone'] = $lims_customer_data['phone_number'];            
             $lims_customer_data['role_id'] = 5;
-            $lims_customer_data['is_deleted'] = false;
+            $lims_customer_data['is_deleted'] = false;            
             $lims_customer_data['password'] = bcrypt($lims_customer_data['password']);
             $user = User::create($lims_customer_data);
             $lims_customer_data['user_id'] = $user->id;

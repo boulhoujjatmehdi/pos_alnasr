@@ -436,19 +436,19 @@ class PurchaseController extends Controller
         return $product_purchase;
     }
 
-    public function purchaseByCsv()
-    {
-        $role = Role::find(Auth::user()->role_id);
-        if($role->hasPermissionTo('purchases-add')){
-            $lims_supplier_list = Supplier::where('is_active', true)->get();
-            $lims_warehouse_list = Warehouse::where('is_active', true)->get();
-            $lims_tax_list = Tax::where('is_active', true)->get();
+    // public function purchaseByCsv()
+    // {
+    //     $role = Role::find(Auth::user()->role_id);
+    //     if($role->hasPermissionTo('purchases-add')){
+    //         $lims_supplier_list = Supplier::where('is_active', true)->get();
+    //         $lims_warehouse_list = Warehouse::where('is_active', true)->get();
+    //         $lims_tax_list = Tax::where('is_active', true)->get();
 
-            return view('purchase.import', compact('lims_supplier_list', 'lims_warehouse_list', 'lims_tax_list'));
-        }
-        else
-            return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
-    }
+    //         return view('purchase.import', compact('lims_supplier_list', 'lims_warehouse_list', 'lims_tax_list'));
+    //     }
+    //     else
+    //         return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
+    // }
 
     public function importPurchase(Request $request)
     {

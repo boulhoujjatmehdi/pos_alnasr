@@ -101,8 +101,7 @@
         </div>
         <p><?php echo e(trans('file.Date')); ?>: <?php echo e($lims_sale_data->created_at); ?><br>
             <?php echo e(trans('file.reference')); ?>: <?php echo e($lims_sale_data->reference_no); ?><br>
-            <?php echo e(trans('file.customer')); ?>: <?php echo e($lims_customer_data->name); ?>
-
+            
         </p>
         <table>
             <tbody>
@@ -110,18 +109,15 @@
                 <?php $__currentLoopData = $lims_product_sale_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product_sale_data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php 
                     $lims_product_data = \App\Product::find($product_sale_data->product_id);
-                    if($product_sale_data->variant_id) {
-                        $variant_data = \App\Variant::find($product_sale_data->variant_id);
-                        $product_name = $lims_product_data->name.' ['.$variant_data->name.']';
-                    }
-                    else
-                        $product_name = $lims_product_data->name;
+                    $product_name = $lims_product_data->name;
                 ?>
                 <tr>
                     <td colspan="2">
-                        <?php echo e($product_name); ?>
+                        <?php echo e($product_sale_data->qty); ?>&nbsp; x &nbsp; <?php echo e($product_name); ?>
 
-                        <br><?php echo e($product_sale_data->qty); ?> x <?php echo e(number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')); ?>
+                    </td>
+                     <td colspan="2">
+                        <?php echo e(number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')); ?>
 
 
                         <?php if($product_sale_data->tax_rate): ?>
@@ -136,7 +132,7 @@
             <tfoot>
                 <tr>
                     <th colspan="2"><?php echo e(trans('file.Total')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->total_price, 2, '.', '')); ?></th>
+                    <th colspan="3" style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->total_price, 2, '.', '')); ?></th>
                 </tr>
                 <?php if($general_setting->invoice_format == 'gst' && $general_setting->state == 1): ?>
                 <tr>
@@ -153,33 +149,10 @@
                     <td style="text-align:right"><?php echo e(number_format((float)($total_product_tax / 2), 2, '.', '')); ?></td>
                 </tr>
                 <?php endif; ?>
-                <?php if($lims_sale_data->order_tax): ?>
-                <tr>
-                    <th colspan="2"><?php echo e(trans('file.Order Tax')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->order_tax, 2, '.', '')); ?></th>
-                </tr>
-                <?php endif; ?>
-                <?php if($lims_sale_data->order_discount): ?>
-                <tr>
-                    <th colspan="2"><?php echo e(trans('file.Order Discount')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->order_discount, 2, '.', '')); ?></th>
-                </tr>
-                <?php endif; ?>
-                <?php if($lims_sale_data->coupon_discount): ?>
-                <tr>
-                    <th colspan="2"><?php echo e(trans('file.Coupon Discount')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->coupon_discount, 2, '.', '')); ?></th>
-                </tr>
-                <?php endif; ?>
-                <?php if($lims_sale_data->shipping_cost): ?>
-                <tr>
-                    <th colspan="2"><?php echo e(trans('file.Shipping Cost')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->shipping_cost, 2, '.', '')); ?></th>
-                </tr>
-                <?php endif; ?>
+
                 <tr>
                     <th colspan="2"><?php echo e(trans('file.grand total')); ?></th>
-                    <th style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->grand_total, 2, '.', '')); ?></th>
+                    <th colspan="3" style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->grand_total, 2, '.', '')); ?></th>
                 </tr>
 
             </tfoot>

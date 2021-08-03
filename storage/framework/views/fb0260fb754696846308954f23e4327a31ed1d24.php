@@ -17,7 +17,6 @@
     <div class="container-fluid">
         <!-- Trigger the modal with a button -->
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#createModal"><i class="dripicons-plus"></i> <?php echo e(trans("file.Add Category")); ?></button>&nbsp;
-        <button class="btn btn-primary" data-toggle="modal" data-target="#importCategory"><i class="dripicons-copy"></i> <?php echo e(trans('file.Import Category')); ?></button>
     </div>
     <div class="table-responsive">
         <table id="category-table" class="table" style="width: 100%">

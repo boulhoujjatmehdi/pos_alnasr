@@ -99,7 +99,7 @@
         </div>
         <p>{{trans('file.Date')}}: {{$lims_sale_data->created_at}}<br>
             {{trans('file.reference')}}: {{$lims_sale_data->reference_no}}<br>
-            {{trans('file.customer')}}: {{$lims_customer_data->name}}
+            {{-- {{trans('file.customer')}}: {{$lims_customer_data->name}} --}}
         </p>
         <table>
             <tbody>
@@ -107,17 +107,14 @@
                 @foreach($lims_product_sale_data as $product_sale_data)
                 <?php 
                     $lims_product_data = \App\Product::find($product_sale_data->product_id);
-                    if($product_sale_data->variant_id) {
-                        $variant_data = \App\Variant::find($product_sale_data->variant_id);
-                        $product_name = $lims_product_data->name.' ['.$variant_data->name.']';
-                    }
-                    else
-                        $product_name = $lims_product_data->name;
+                    $product_name = $lims_product_data->name;
                 ?>
                 <tr>
                     <td colspan="2">
-                        {{$product_name}}
-                        <br>{{$product_sale_data->qty}} x {{number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')}}
+                        {{$product_sale_data->qty}}&nbsp; x &nbsp; {{$product_name}}
+                    </td>
+                     <td colspan="2">
+                        {{number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')}}
 
                         @if($product_sale_data->tax_rate)
                             <?php $total_product_tax += $product_sale_data->tax ?>
@@ -131,7 +128,7 @@
             <tfoot>
                 <tr>
                     <th colspan="2">{{trans('file.Total')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->total_price, 2, '.', '')}}</th>
+                    <th colspan="3" style="text-align:right">{{number_format((float)$lims_sale_data->total_price, 2, '.', '')}}</th>
                 </tr>
                 @if($general_setting->invoice_format == 'gst' && $general_setting->state == 1)
                 <tr>
@@ -148,33 +145,10 @@
                     <td style="text-align:right">{{number_format((float)($total_product_tax / 2), 2, '.', '')}}</td>
                 </tr>
                 @endif
-                @if($lims_sale_data->order_tax)
-                <tr>
-                    <th colspan="2">{{trans('file.Order Tax')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->order_tax, 2, '.', '')}}</th>
-                </tr>
-                @endif
-                @if($lims_sale_data->order_discount)
-                <tr>
-                    <th colspan="2">{{trans('file.Order Discount')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->order_discount, 2, '.', '')}}</th>
-                </tr>
-                @endif
-                @if($lims_sale_data->coupon_discount)
-                <tr>
-                    <th colspan="2">{{trans('file.Coupon Discount')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->coupon_discount, 2, '.', '')}}</th>
-                </tr>
-                @endif
-                @if($lims_sale_data->shipping_cost)
-                <tr>
-                    <th colspan="2">{{trans('file.Shipping Cost')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->shipping_cost, 2, '.', '')}}</th>
-                </tr>
-                @endif
+
                 <tr>
                     <th colspan="2">{{trans('file.grand total')}}</th>
-                    <th style="text-align:right">{{number_format((float)$lims_sale_data->grand_total, 2, '.', '')}}</th>
+                    <th colspan="3" style="text-align:right">{{number_format((float)$lims_sale_data->grand_total, 2, '.', '')}}</th>
                 </tr>
 
             </tfoot>

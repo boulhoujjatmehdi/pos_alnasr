@@ -25,23 +25,6 @@
                 ['role_id', $role->id]
             ])->first();
 
-            $print_barcode = DB::table('permissions')->where('name', 'print_barcode')->first();
-                  $print_barcode_active = DB::table('role_has_permissions')->where([
-                      ['permission_id', $print_barcode->id],
-                      ['role_id', $role->id]
-                  ])->first();
-
-              $stock_count = DB::table('permissions')->where('name', 'stock_count')->first();
-                  $stock_count_active = DB::table('role_has_permissions')->where([
-                      ['permission_id', $stock_count->id],
-                      ['role_id', $role->id]
-                  ])->first();
-
-                $adjustment = DB::table('permissions')->where('name', 'adjustment')->first();
-                $adjustment_active = DB::table('role_has_permissions')->where([
-                    ['permission_id', $adjustment->id],
-                    ['role_id', $role->id]
-                ])->first();
           ?>
           
           <li><a href="#product" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-list"></i><span>{{__('file.product')}}</span><span></a>
@@ -60,16 +43,7 @@
               <li id="product-create-menu"><a href="{{route('products.create')}}">{{__('file.add_product')}}</a></li>
               @endif
               @endif
-              @if($print_barcode_active)
-              <li id="printBarcode-menu"><a href="{{route('product.printBarcode')}}">{{__('file.print_barcode')}}</a></li>
-              @endif
-              @if($adjustment_active)
-                <li id="adjustment-list-menu"><a href="{{route('qty_adjustment.index')}}">{{trans('file.Adjustment List')}}</a></li>
-                <li id="adjustment-create-menu"><a href="{{route('qty_adjustment.create')}}">{{trans('file.Add Adjustment')}}</a></li>
-              @endif
-              @if($stock_count_active)
-                <li id="stock-count-menu"><a href="{{route('stock-count.index')}}">{{trans('file.Stock Count')}}</a></li>
-              @endif
+
             </ul>
           </li>
           <?php 
@@ -104,17 +78,7 @@
                     ['role_id', $role->id]
                 ])->first();
 
-            $gift_card_permission = DB::table('permissions')->where('name', 'gift_card')->first();
-            $gift_card_permission_active = DB::table('role_has_permissions')->where([
-                    ['permission_id', $gift_card_permission->id],
-                    ['role_id', $role->id]
-                ])->first();
-
-            $coupon_permission = DB::table('permissions')->where('name', 'coupon')->first();
-            $coupon_permission_active = DB::table('role_has_permissions')->where([
-                    ['permission_id', $coupon_permission->id],
-                    ['role_id', $role->id]
-                ])->first();
+ 
           ?>
           
           <li><a href="#sale" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-cart"></i><span>{{trans('file.Sale')}}</span></a>
@@ -134,13 +98,7 @@
               <li id="sale-import-menu"><a href="{{url('sales/sale_by_csv')}}">{{trans('file.Import Sale By CSV')}}</a></li>
               @endif
               @endif
-              @if($gift_card_permission_active)
-              <li id="gift-card-menu"><a href="{{route('gift_cards.index')}}">{{trans('file.Gift Card List')}}</a> </li>
-              @endif
-              @if($coupon_permission_active)
-              <li id="coupon-menu"><a href="{{route('coupons.index')}}">{{trans('file.Coupon List')}}</a> </li>
-              @endif
-              <li id="delivery-menu"><a href="{{route('delivery.index')}}">{{trans('file.Delivery List')}}</a></li>
+
             </ul>
           </li>
           <?php 
@@ -898,26 +856,9 @@
                         <h2>{{trans('file.grand total')}} <span id="grand-total">0.00</span></h2>
                     </div>
                     <div class="payment-options">
-                        <div class="column-5">
-                            <button style="background: #0984e3" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="credit-card-btn"><i class="fa fa-credit-card"></i> Card</button>   
-                        </div>
+
                         <div class="column-5">
                             <button style="background: #00cec9" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cash-btn"><i class="fa fa-money"></i> Cash</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #213170" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="paypal-btn"><i class="fa fa-paypal"></i> Paypal</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #e28d02" type="button" class="btn btn-custom" id="draft-btn"><i class="dripicons-flag"></i> Draft</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #fd7272" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cheque-btn"><i class="fa fa-money"></i> Cheque</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #5f27cd" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="gift-card-btn"><i class="fa fa-credit-card-alt"></i> GiftCard</button>
-                        </div>
-                        <div class="column-5">
-                            <button style="background-color: #b33771" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="deposit-btn"><i class="fa fa-university"></i> Deposit</button>
                         </div>
                         <div class="column-5">
                             <button style="background-color: #d63031;" type="button" class="btn btn-custom" id="cancel-btn" onclick="return confirmCancel()"><i class="fa fa-close"></i> Cancel</button>
@@ -957,11 +898,6 @@
                                             <label>{{trans('file.Paid By')}}</label>
                                             <select name="paid_by_id_select" class="form-control selectpicker">
                                                 <option value="1">Cash</option>
-                                                <option value="2">Gift Card</option>
-                                                <option value="3">Credit Card</option>
-                                                <option value="4">Cheque</option>
-                                                <option value="5">Paypal</option>
-                                                <option value="6">Deposit</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-12 mt-3">
@@ -1396,16 +1332,16 @@
                             <input type="text" name="email" placeholder="example@example.com" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>{{trans('file.Phone Number')}} *</label>
-                            <input type="text" name="phone_number" required class="form-control">
+                            <label>{{trans('file.Phone Number')}} </label>
+                            <input type="text" name="phone_number"  class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>{{trans('file.Address')}} *</label>
-                            <input type="text" name="address" required class="form-control">
+                            <label>{{trans('file.Address')}} </label>
+                            <input type="text" name="address"  class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>{{trans('file.City')}} *</label>
-                            <input type="text" name="city" required class="form-control">
+                            <label>{{trans('file.City')}} </label>
+                            <input type="text" name="city"  class="form-control">
                         </div>
                         <div class="form-group">
                         <input type="hidden" name="pos" value="1">      
@@ -2353,43 +2289,8 @@ $(".payment-btn").on("click", function() {
     $('.qc').data('initial', 1);
 });
 
-$("#draft-btn").on("click",function(){
-    var audio = $("#mysoundclip2")[0];
-    audio.play();
-    $('input[name="sale_status"]').val(3);
-    $('input[name="paying_amount"]').prop('required',false);
-    $('input[name="paid_amount"]').prop('required',false);
-    var rownumber = $('table.order-list tbody tr:last').index();
-    if (rownumber < 0) {
-        alert("Please insert product to order table!")
-    }
-    else
-        $('.payment-form').submit();
-});
-
 $("#submit-btn").on("click", function() {
     $('.payment-form').submit();
-});
-
-$("#gift-card-btn").on("click",function() {
-    $('select[name="paid_by_id_select"]').val(2);
-    $('.selectpicker').selectpicker('refresh');
-    $('div.qc').hide();
-    giftCard();
-});
-
-$("#credit-card-btn").on("click",function() {
-    $('select[name="paid_by_id_select"]').val(3);
-    $('.selectpicker').selectpicker('refresh');
-    $('div.qc').hide();
-    creditCard();
-});
-
-$("#cheque-btn").on("click",function() {
-    $('select[name="paid_by_id_select"]').val(4);
-    $('.selectpicker').selectpicker('refresh');
-    $('div.qc').hide();
-    cheque();
 });
 
 $("#cash-btn").on("click",function() {
@@ -2399,43 +2300,9 @@ $("#cash-btn").on("click",function() {
     hide();
 });
 
-$("#paypal-btn").on("click",function() {
-    $('select[name="paid_by_id_select"]').val(5);
-    $('.selectpicker').selectpicker('refresh');
-    $('div.qc').hide();
-    hide();
-});
-
-$("#deposit-btn").on("click",function() {
-    $('select[name="paid_by_id_select"]').val(6);
-    $('.selectpicker').selectpicker('refresh');
-    $('div.qc').hide();
-    hide();
-    deposits();
-});
-
 $('select[name="paid_by_id_select"]').on("change", function() {       
     var id = $(this).val();
     $(".payment-form").off("submit");
-    if(id == 2) {
-        $('div.qc').hide();
-        giftCard();
-    }
-    else if (id == 3) {
-        $('div.qc').hide();
-        creditCard();
-    } else if (id == 4) {
-        $('div.qc').hide();
-        cheque();
-    } else {
-        hide();
-        if(id == 1)
-            $('div.qc').show();
-        else if(id == 6) {
-            $('div.qc').hide();
-            deposits();
-        }
-    }
 });
 
 $('#add-payment select[name="gift_card_id_select"]').on("change", function() {
@@ -2869,53 +2736,12 @@ function hide() {
     $('input[name="cheque_no"]').attr('required', false);
 }
 
-function giftCard() {
-    $(".gift-card").show();
-    $.ajax({
-        url: 'sales/get_gift_card',
-        type: "GET",
-        dataType: "json",
-        success:function(data) {
-            $('#add-payment select[name="gift_card_id_select"]').empty();
-            $.each(data, function(index) {
-                gift_card_amount[data[index]['id']] = data[index]['amount'];
-                gift_card_expense[data[index]['id']] = data[index]['expense'];
-                $('#add-payment select[name="gift_card_id_select"]').append('<option value="'+ data[index]['id'] +'">'+ data[index]['card_no'] +'</option>');
-            });
-            $('.selectpicker').selectpicker('refresh');
-            $('.selectpicker').selectpicker();
-        }
-    });
-    $(".card-element").hide();
-    $(".card-errors").hide();
-    $(".cheque").hide();
-    $('input[name="cheque_no"]').attr('required', false);
-}
 
-function cheque() {
-    $(".cheque").show();
-    $('input[name="cheque_no"]').attr('required', true);
-    $(".card-element").hide();
-    $(".card-errors").hide();
-    $(".gift-card").hide();
-}
 
-function creditCard() {
-    $.getScript( "public/vendor/stripe/checkout.js" );
-    $(".card-element").show();
-    $(".card-errors").show();
-    $(".cheque").hide();
-    $(".gift-card").hide();
-    $('input[name="cheque_no"]').attr('required', false);
-}
 
-function deposits() {
-    if($('input[name="paid_amount"]').val() > deposit[$('#customer_id').val()]){
-        alert('Amount exceeds customer deposit! Customer deposit : '+ deposit[$('#customer_id').val()]);
-    }
-    $('input[name="cheque_no"]').attr('required', false);
-    $('#add-payment select[name="gift_card_id_select"]').attr('required', false);
-}
+
+
+
 
 function cancel(rownumber) {
     while(rownumber >= 0) {

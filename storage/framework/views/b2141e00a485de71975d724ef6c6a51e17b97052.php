@@ -19,7 +19,6 @@
     <div class="container-fluid">
         <?php if(in_array("products-add", $all_permission)): ?>
             <a href="<?php echo e(route('products.create')); ?>" class="btn btn-info"><i class="dripicons-plus"></i> <?php echo e(__('file.add_product')); ?></a>
-            <a href="#" data-toggle="modal" data-target="#importProduct" class="btn btn-primary"><i class="dripicons-copy"></i> <?php echo e(__('file.import_product')); ?></a>
         <?php endif; ?>
     </div>
     <div class="table-responsive">

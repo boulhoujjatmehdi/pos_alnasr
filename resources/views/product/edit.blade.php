@@ -16,19 +16,6 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>{{trans('file.Product Type')}} *</strong> </label>
-                                        <div class="input-group">
-                                            <select name="type" required class="form-control selectpicker" id="type">
-                                                <option value="standard">Standard</option>
-                                                <option value="combo">Combo</option>
-                                                <option value="digital">Digital</option>
-                                            </select>
-                                            <input type="hidden" name="type_hidden" value="{{$lims_product_data->type}}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label>{{trans('file.Product Name')}} *</strong> </label>
                                         <input type="text" name="name" value="{{$lims_product_data->name}}" required class="form-control">
                                         <span class="validation-msg" id="name-error"></span>
@@ -136,6 +123,16 @@
                                       </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mt-3">
+                                        @if($lims_product_data->featured)
+                                            <input type="checkbox" name="featured" value="1" checked>
+                                        @else
+                                            <input type="checkbox" name="featured" value="1">
+                                        @endif
+                                        <label>{{trans('file.Featured')}}</label>
+                                    </div>
+                                </div>
                                 <div id="unit" class="col-md-12">
                                     <div class="row ">
                                         <div class="col-md-4">
@@ -194,38 +191,7 @@
                                         <input type="number" name="alert_quantity" value="{{$lims_product_data->alert_quantity}}" class="form-control" step="any">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="hidden" name="tax" value="{{$lims_product_data->tax_id}}">
-                                        <label>{{trans('file.product')}} {{trans('file.Tax')}}</strong> </label>
-                                        <select name="tax_id" class="form-control selectpicker">
-                                            <option value="">No Tax</option>
-                                            @foreach($lims_tax_list as $tax)
-                                                <option value="{{$tax->id}}">{{$tax->name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="hidden" name="tax_method_id" value="{{$lims_product_data->tax_method}}">
-                                        <label>{{trans('file.Tax Method')}}</strong> </label>
-                                        <select name="tax_method" class="form-control selectpicker">
-                                            <option value="1">{{trans('file.Exclusive')}}</option>
-                                            <option value="2">{{trans('file.Inclusive')}}</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group mt-3">
-                                        @if($lims_product_data->featured)
-                                            <input type="checkbox" name="featured" value="1" checked>
-                                        @else
-                                            <input type="checkbox" name="featured" value="1">
-                                        @endif
-                                        <label>{{trans('file.Featured')}}</label>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>{{trans('file.Product Image')}}</strong> </label> <i class="dripicons-question" data-toggle="tooltip" title="{{trans('file.You can upload multiple image. Only .jpeg, .jpg, .png, .gif file can be uploaded. First image will be base image.')}}"></i>
@@ -259,116 +225,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-md-12"> 
-                                    <div class="form-group">
-                                        <label>{{trans('file.Product Details')}}</label>
-                                        <textarea name="product_details" class="form-control" rows="5">{{str_replace('@', '"', $lims_product_data->product_details)}}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-2" id="diffPrice-option">
-                                    @if($lims_product_data->is_diffPrice)
-                                        <h5><input name="is_diffPrice" type="checkbox" id="is-diffPrice" value="1" checked>&nbsp; {{trans('file.This product has different price for different warehouse')}}</h5>
-                                    @else
-                                        <h5><input name="is_diffPrice" type="checkbox" id="is-diffPrice" value="1">&nbsp; {{trans('file.This product has different price for different warehouse')}}</h5>
-                                    @endif
-                                </div>
-                                <div class="col-md-6" id="diffPrice-section">
-                                    <div class="table-responsive ml-2">
-                                        <table id="diffPrice-table" class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>{{trans('file.Warehouse')}}</th>
-                                                    <th>{{trans('file.Price')}}</th>
-                                                </tr>
-                                                @foreach($lims_warehouse_list as $warehouse)
-                                                <tr>
-                                                    <td>
-                                                        <input type="hidden" name="warehouse_id[]" value="{{$warehouse->id}}">
-                                                        {{$warehouse->name}}
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                            $product_warehouse = \App\Product_Warehouse::FindProductWithoutVariant($lims_product_data->id, $warehouse->id)->first();
-                                                        ?>
-                                                        @if($product_warehouse)
-                                                            <input type="number" name="diff_price[]" class="form-control" value="{{$product_warehouse->price}}">
-                                                        @else
-                                                            <input type="number" name="diff_price[]" class="form-control">
-                                                        @endif
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-3" id="variant-option">
-                                    @if($lims_product_data->is_variant)
-                                    <h5><input name="is_variant" type="checkbox" id="is-variant" value="1" checked>&nbsp; {{trans('file.This product has variant')}}</h5>
-                                    @else
-                                    <h5><input name="is_variant" type="checkbox" id="is-variant" value="1">&nbsp; {{trans('file.This product has variant')}}</h5>
-                                    @endif
-                                </div>
-                                <div class="col-md-12" id="variant-section">
-                                    <div class="col-md-6 form-group mt-2">
-                                        <input type="text" name="variant" class="form-control" placeholder="{{trans('file.Enter variant seperated by comma')}}">
-                                    </div>
-                                    <div class="table-responsive ml-2">
-                                        <table id="variant-table" class="table table-hover variant-list">
-                                            <thead>
-                                                <tr>
-                                                    <th><i class="dripicons-view-apps"></i></th>
-                                                    <th>{{trans('file.name')}}</th>
-                                                    <th>{{trans('file.Item Code')}}</th>
-                                                    <th>{{trans('file.Additional Price')}}</th>
-                                                    <th><i class="dripicons-trash"></i></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($lims_product_variant_data as $key=> $variant)
-                                                <tr>
-                                                    <td style="cursor:grab">
-                                                        <i class="dripicons-view-apps"></i>
-                                                        <input type="hidden" name="product_variant_id[]" value="{{$variant->pivot['id']}}">
-                                                        <input type="hidden" name="variant_id[]" value="{{$variant->pivot['variant_id']}}">
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="variant_name[]" value="{{$variant->name}}" /></td>
-                                                    <td><input type="text" class="form-control" name="item_code[]" value="{{$variant->pivot['item_code']}}" /></td>
-                                                    <td><input type="number" class="form-control" name="additional_price[]" value="{{$variant->pivot['additional_price']}}" step="any" /></td>
-                                                    <td><button type="button" class="vbtnDel btn btn-sm btn-danger">X</button></td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mt-3">
-                                    <input type="hidden" name="promotion_hidden" value="{{$lims_product_data->promotion}}">
-                                    <input name="promotion" type="checkbox" id="promotion" value="1">&nbsp;
-                                    <label><h5>{{trans('file.Add Promotional Price')}}</h5></label>
-                                </div>
                                 
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4" id="promotion_price">   <label>{{trans('file.Promotional Price')}}</label>
-                                            <input type="number" name="promotion_price" value="{{$lims_product_data->promotion_price}}" class="form-control" step="any" />
-                                        </div>
-                                        <div id="start_date" class="col-md-4">
-                                            <div class="form-group">
-                                                <label>{{trans('file.Promotion Starts')}}</label>
-                                                <input type="text" name="starting_date" value="{{$lims_product_data->starting_date}}" id="starting_date" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div id="last_date" class="col-md-4">
-                                            <div class="form-group">
-                                                <label>{{trans('file.Promotion Ends')}}</label>
-                                                <input type="text" name="last_date" value="{{$lims_product_data->last_date}}" id="ending_date" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="button" value="{{trans('file.submit')}}" class="btn btn-primary" id="submit-btn">
@@ -841,7 +698,7 @@
                             data: $("#product-form").serialize(),
                             success:function(response){
                                 //console.log(response);
-                                location.href = '../';
+                                location.href = '../../products';
                             },
                             error:function(response) {
                                 //console.log(response);

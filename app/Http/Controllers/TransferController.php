@@ -268,16 +268,16 @@ class TransferController extends Controller
         return $product_transfer;
     }
 
-    public function transferByCsv()
-    {
-        $role = Role::find(Auth::user()->role_id);
-        if($role->hasPermissionTo('transfers-add')){
-            $lims_warehouse_list = Warehouse::where('is_active', true)->get();
-            return view('transfer.import', compact('lims_warehouse_list'));
-        }
-        else
-            return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
-    }
+    // public function transferByCsv()
+    // {
+    //     $role = Role::find(Auth::user()->role_id);
+    //     if($role->hasPermissionTo('transfers-add')){
+    //         $lims_warehouse_list = Warehouse::where('is_active', true)->get();
+    //         return view('transfer.import', compact('lims_warehouse_list'));
+    //     }
+    //     else
+    //         return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
+    // }
 
     public function importTransfer(Request $request)
     {

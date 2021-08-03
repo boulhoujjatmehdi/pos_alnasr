@@ -1099,20 +1099,20 @@ class SaleController extends Controller
         return $product_sale;
     }
 
-    public function saleByCsv()
-    {
-        $role = Role::find(Auth::user()->role_id);
-        if($role->hasPermissionTo('sales-add')){
-            $lims_customer_list = Customer::where('is_active', true)->get();
-            $lims_warehouse_list = Warehouse::where('is_active', true)->get();
-            $lims_biller_list = Biller::where('is_active', true)->get();
-            $lims_tax_list = Tax::where('is_active', true)->get();
+    // public function saleByCsv()
+    // {
+    //     $role = Role::find(Auth::user()->role_id);
+    //     if($role->hasPermissionTo('sales-add')){
+    //         $lims_customer_list = Customer::where('is_active', true)->get();
+    //         $lims_warehouse_list = Warehouse::where('is_active', true)->get();
+    //         $lims_biller_list = Biller::where('is_active', true)->get();
+    //         $lims_tax_list = Tax::where('is_active', true)->get();
 
-            return view('sale.import',compact('lims_customer_list', 'lims_warehouse_list', 'lims_biller_list', 'lims_tax_list'));
-        }
-        else
-            return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
-    }
+    //         return view('sale.import',compact('lims_customer_list', 'lims_warehouse_list', 'lims_biller_list', 'lims_tax_list'));
+    //     }
+    //     else
+    //         return redirect()->back()->with('not_permitted', 'Sorry! You are not allowed to access this module');
+    // }
 
     public function importSale(Request $request)
     {

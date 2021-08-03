@@ -10,7 +10,6 @@
     <div class="container-fluid">
         <?php if(in_array("purchases-add", $all_permission)): ?>
             <a href="<?php echo e(route('purchases.create')); ?>" class="btn btn-info"><i class="dripicons-plus"></i> <?php echo e(trans('file.Add Purchase')); ?></a>&nbsp;
-            <a href="<?php echo e(url('purchases/purchase_by_csv')); ?>" class="btn btn-primary"><i class="dripicons-copy"></i> <?php echo e(trans('file.Import Purchase')); ?></a>
         <?php endif; ?>
     </div>
     <div class="table-responsive">

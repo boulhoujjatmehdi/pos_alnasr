@@ -14,19 +14,6 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label><?php echo e(trans('file.Product Type')); ?> *</strong> </label>
-                                        <div class="input-group">
-                                            <select name="type" required class="form-control selectpicker" id="type">
-                                                <option value="standard">Standard</option>
-                                                <option value="combo">Combo</option>
-                                                <option value="digital">Digital</option>
-                                            </select>
-                                            <input type="hidden" name="type_hidden" value="<?php echo e($lims_product_data->type); ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
                                         <label><?php echo e(trans('file.Product Name')); ?> *</strong> </label>
                                         <input type="text" name="name" value="<?php echo e($lims_product_data->name); ?>" required class="form-control">
                                         <span class="validation-msg" id="name-error"></span>
@@ -134,6 +121,16 @@
                                       </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mt-3">
+                                        <?php if($lims_product_data->featured): ?>
+                                            <input type="checkbox" name="featured" value="1" checked>
+                                        <?php else: ?>
+                                            <input type="checkbox" name="featured" value="1">
+                                        <?php endif; ?>
+                                        <label><?php echo e(trans('file.Featured')); ?></label>
+                                    </div>
+                                </div>
                                 <div id="unit" class="col-md-12">
                                     <div class="row ">
                                         <div class="col-md-4">
@@ -192,38 +189,7 @@
                                         <input type="number" name="alert_quantity" value="<?php echo e($lims_product_data->alert_quantity); ?>" class="form-control" step="any">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="hidden" name="tax" value="<?php echo e($lims_product_data->tax_id); ?>">
-                                        <label><?php echo e(trans('file.product')); ?> <?php echo e(trans('file.Tax')); ?></strong> </label>
-                                        <select name="tax_id" class="form-control selectpicker">
-                                            <option value="">No Tax</option>
-                                            <?php $__currentLoopData = $lims_tax_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tax): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <option value="<?php echo e($tax->id); ?>"><?php echo e($tax->name); ?></option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input type="hidden" name="tax_method_id" value="<?php echo e($lims_product_data->tax_method); ?>">
-                                        <label><?php echo e(trans('file.Tax Method')); ?></strong> </label>
-                                        <select name="tax_method" class="form-control selectpicker">
-                                            <option value="1"><?php echo e(trans('file.Exclusive')); ?></option>
-                                            <option value="2"><?php echo e(trans('file.Inclusive')); ?></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group mt-3">
-                                        <?php if($lims_product_data->featured): ?>
-                                            <input type="checkbox" name="featured" value="1" checked>
-                                        <?php else: ?>
-                                            <input type="checkbox" name="featured" value="1">
-                                        <?php endif; ?>
-                                        <label><?php echo e(trans('file.Featured')); ?></label>
-                                    </div>
-                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label><?php echo e(trans('file.Product Image')); ?></strong> </label> <i class="dripicons-question" data-toggle="tooltip" title="<?php echo e(trans('file.You can upload multiple image. Only .jpeg, .jpg, .png, .gif file can be uploaded. First image will be base image.')); ?>"></i>
@@ -257,117 +223,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-md-12"> 
-                                    <div class="form-group">
-                                        <label><?php echo e(trans('file.Product Details')); ?></label>
-                                        <textarea name="product_details" class="form-control" rows="5"><?php echo e(str_replace('@', '"', $lims_product_data->product_details)); ?></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-2" id="diffPrice-option">
-                                    <?php if($lims_product_data->is_diffPrice): ?>
-                                        <h5><input name="is_diffPrice" type="checkbox" id="is-diffPrice" value="1" checked>&nbsp; <?php echo e(trans('file.This product has different price for different warehouse')); ?></h5>
-                                    <?php else: ?>
-                                        <h5><input name="is_diffPrice" type="checkbox" id="is-diffPrice" value="1">&nbsp; <?php echo e(trans('file.This product has different price for different warehouse')); ?></h5>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="col-md-6" id="diffPrice-section">
-                                    <div class="table-responsive ml-2">
-                                        <table id="diffPrice-table" class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th><?php echo e(trans('file.Warehouse')); ?></th>
-                                                    <th><?php echo e(trans('file.Price')); ?></th>
-                                                </tr>
-                                                <?php $__currentLoopData = $lims_warehouse_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $warehouse): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <tr>
-                                                    <td>
-                                                        <input type="hidden" name="warehouse_id[]" value="<?php echo e($warehouse->id); ?>">
-                                                        <?php echo e($warehouse->name); ?>
-
-                                                    </td>
-                                                    <td>
-                                                        <?php 
-                                                            $product_warehouse = \App\Product_Warehouse::FindProductWithoutVariant($lims_product_data->id, $warehouse->id)->first();
-                                                        ?>
-                                                        <?php if($product_warehouse): ?>
-                                                            <input type="number" name="diff_price[]" class="form-control" value="<?php echo e($product_warehouse->price); ?>">
-                                                        <?php else: ?>
-                                                            <input type="number" name="diff_price[]" class="form-control">
-                                                        <?php endif; ?>
-                                                    </td>
-                                                </tr>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-3" id="variant-option">
-                                    <?php if($lims_product_data->is_variant): ?>
-                                    <h5><input name="is_variant" type="checkbox" id="is-variant" value="1" checked>&nbsp; <?php echo e(trans('file.This product has variant')); ?></h5>
-                                    <?php else: ?>
-                                    <h5><input name="is_variant" type="checkbox" id="is-variant" value="1">&nbsp; <?php echo e(trans('file.This product has variant')); ?></h5>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="col-md-12" id="variant-section">
-                                    <div class="col-md-6 form-group mt-2">
-                                        <input type="text" name="variant" class="form-control" placeholder="<?php echo e(trans('file.Enter variant seperated by comma')); ?>">
-                                    </div>
-                                    <div class="table-responsive ml-2">
-                                        <table id="variant-table" class="table table-hover variant-list">
-                                            <thead>
-                                                <tr>
-                                                    <th><i class="dripicons-view-apps"></i></th>
-                                                    <th><?php echo e(trans('file.name')); ?></th>
-                                                    <th><?php echo e(trans('file.Item Code')); ?></th>
-                                                    <th><?php echo e(trans('file.Additional Price')); ?></th>
-                                                    <th><i class="dripicons-trash"></i></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $__currentLoopData = $lims_product_variant_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $variant): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <tr>
-                                                    <td style="cursor:grab">
-                                                        <i class="dripicons-view-apps"></i>
-                                                        <input type="hidden" name="product_variant_id[]" value="<?php echo e($variant->pivot['id']); ?>">
-                                                        <input type="hidden" name="variant_id[]" value="<?php echo e($variant->pivot['variant_id']); ?>">
-                                                    </td>
-                                                    <td><input type="text" class="form-control" name="variant_name[]" value="<?php echo e($variant->name); ?>" /></td>
-                                                    <td><input type="text" class="form-control" name="item_code[]" value="<?php echo e($variant->pivot['item_code']); ?>" /></td>
-                                                    <td><input type="number" class="form-control" name="additional_price[]" value="<?php echo e($variant->pivot['additional_price']); ?>" step="any" /></td>
-                                                    <td><button type="button" class="vbtnDel btn btn-sm btn-danger">X</button></td>
-                                                </tr>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mt-3">
-                                    <input type="hidden" name="promotion_hidden" value="<?php echo e($lims_product_data->promotion); ?>">
-                                    <input name="promotion" type="checkbox" id="promotion" value="1">&nbsp;
-                                    <label><h5><?php echo e(trans('file.Add Promotional Price')); ?></h5></label>
-                                </div>
                                 
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-4" id="promotion_price">   <label><?php echo e(trans('file.Promotional Price')); ?></label>
-                                            <input type="number" name="promotion_price" value="<?php echo e($lims_product_data->promotion_price); ?>" class="form-control" step="any" />
-                                        </div>
-                                        <div id="start_date" class="col-md-4">
-                                            <div class="form-group">
-                                                <label><?php echo e(trans('file.Promotion Starts')); ?></label>
-                                                <input type="text" name="starting_date" value="<?php echo e($lims_product_data->starting_date); ?>" id="starting_date" class="form-control" />
-                                            </div>
-                                        </div>
-                                        <div id="last_date" class="col-md-4">
-                                            <div class="form-group">
-                                                <label><?php echo e(trans('file.Promotion Ends')); ?></label>
-                                                <input type="text" name="last_date" value="<?php echo e($lims_product_data->last_date); ?>" id="ending_date" class="form-control" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input type="button" value="<?php echo e(trans('file.submit')); ?>" class="btn btn-primary" id="submit-btn">
@@ -840,7 +696,7 @@
                             data: $("#product-form").serialize(),
                             success:function(response){
                                 //console.log(response);
-                                location.href = '../';
+                                location.href = '../../products';
                             },
                             error:function(response) {
                                 //console.log(response);

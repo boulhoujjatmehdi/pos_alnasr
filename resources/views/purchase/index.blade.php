@@ -10,7 +10,6 @@
     <div class="container-fluid">
         @if(in_array("purchases-add", $all_permission))
             <a href="{{route('purchases.create')}}" class="btn btn-info"><i class="dripicons-plus"></i> {{trans('file.Add Purchase')}}</a>&nbsp;
-            <a href="{{url('purchases/purchase_by_csv')}}" class="btn btn-primary"><i class="dripicons-copy"></i> {{trans('file.Import Purchase')}}</a>
         @endif
     </div>
     <div class="table-responsive">

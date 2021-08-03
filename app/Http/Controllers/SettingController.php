@@ -64,7 +64,7 @@ class SettingController extends Controller
         $path =app()->environmentFilePath();
         $searchArray = array('APP_TIMEZONE='.env('APP_TIMEZONE'));
         $replaceArray = array('APP_TIMEZONE='.$data['timezone']);
-        dd(env('APP_TIMEZONE'));
+
         file_put_contents($path, str_replace($searchArray, $replaceArray, file_get_contents($path)));
 
         $general_setting = GeneralSetting::latest()->first();
@@ -202,7 +202,7 @@ class SettingController extends Controller
 
         $data = $request->all();
         //writting mail info in .env file
-        $path = '.env';
+        $path =app()->environmentFilePath();
         $searchArray = array('MAIL_HOST="'.env('MAIL_HOST').'"', 'MAIL_PORT='.env('MAIL_PORT'), 'MAIL_FROM_ADDRESS="'.env('MAIL_FROM_ADDRESS').'"', 'MAIL_FROM_NAME="'.env('MAIL_FROM_NAME').'"', 'MAIL_USERNAME="'.env('MAIL_USERNAME').'"', 'MAIL_PASSWORD="'.env('MAIL_PASSWORD').'"', 'MAIL_ENCRYPTION="'.env('MAIL_ENCRYPTION').'"');
         //return $searchArray;
 
@@ -225,7 +225,7 @@ class SettingController extends Controller
         
         $data = $request->all();
         //writting bulksms info in .env file
-        $path = '.env';
+        $path =app()->environmentFilePath();
         if($data['gateway'] == 'twilio'){
             $searchArray = array('SMS_GATEWAY='.env('SMS_GATEWAY'), 'ACCOUNT_SID='.env('ACCOUNT_SID'), 'AUTH_TOKEN='.env('AUTH_TOKEN'), 'Twilio_Number='.env('Twilio_Number') );
 
@@ -322,12 +322,13 @@ class SettingController extends Controller
 
     	$data = $request->all();
         //writting paypal info in .env file
-        $path = '.env';
-        $searchArray = array('PAYPAL_LIVE_API_USERNAME='.env('PAYPAL_LIVE_API_USERNAME'), 'PAYPAL_LIVE_API_PASSWORD='.env('PAYPAL_LIVE_API_PASSWORD'), 'PAYPAL_LIVE_API_SECRET='.env('PAYPAL_LIVE_API_SECRET') );
 
-        $replaceArray = array('PAYPAL_LIVE_API_USERNAME='.$data['paypal_username'], 'PAYPAL_LIVE_API_PASSWORD='.$data['paypal_password'], 'PAYPAL_LIVE_API_SECRET='.$data['paypal_signature'] );
+        // $path =app()->environmentFilePath();
+        // $searchArray = array('PAYPAL_LIVE_API_USERNAME='.env('PAYPAL_LIVE_API_USERNAME'), 'PAYPAL_LIVE_API_PASSWORD='.env('PAYPAL_LIVE_API_PASSWORD'), 'PAYPAL_LIVE_API_SECRET='.env('PAYPAL_LIVE_API_SECRET') );
 
-        file_put_contents($path, str_replace($searchArray, $replaceArray, file_get_contents($path)));
+        // $replaceArray = array('PAYPAL_LIVE_API_USERNAME='.$data['paypal_username'], 'PAYPAL_LIVE_API_PASSWORD='.$data['paypal_password'], 'PAYPAL_LIVE_API_SECRET='.$data['paypal_signature'] );
+
+        // file_put_contents($path, str_replace($searchArray, $replaceArray, file_get_contents($path)));
 
     	$pos_setting = PosSetting::firstOrNew(['id' => 1]);
     	$pos_setting->id = 1;
@@ -335,8 +336,6 @@ class SettingController extends Controller
     	$pos_setting->warehouse_id = $data['warehouse_id'];
     	$pos_setting->biller_id = $data['biller_id'];
     	$pos_setting->product_number = $data['product_number'];
-    	$pos_setting->stripe_public_key = $data['stripe_public_key'];
-    	$pos_setting->stripe_secret_key = $data['stripe_secret_key'];
         if(!isset($data['keybord_active']))
             $pos_setting->keybord_active = false;
         else
