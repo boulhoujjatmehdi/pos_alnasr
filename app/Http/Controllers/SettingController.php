@@ -97,11 +97,11 @@ class SettingController extends Controller
         $username = env('DB_USERNAME');
         $password = env('DB_PASSWORD');
         $database_name = env('DB_DATABASE');
-
+        dd($host, $username, $password, $database_name);
         // Get connection object and set the charset
         $conn = mysqli_connect($host, $username, $password, $database_name);
         $conn->set_charset("utf8");
-
+        
 
         // Get All Table Names From the Database
         $tables = array();

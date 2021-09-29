@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
     public function index()
     {
-        if(Auth::user()->role_id <= 2) {
+        if(Auth::user()->role_id <= 1) {
             $lims_role_all = Roles::where('is_active', true)->get();
             return view('role.create', compact('lims_role_all'));
         }
@@ -46,7 +46,7 @@ class RoleController extends Controller
 
     public function edit($id)
     {
-        if(Auth::user()->role_id <= 2) {
+        if(Auth::user()->role_id <= 1) {
             $lims_role_data = Roles::find($id);
             return $lims_role_data;
         }
@@ -73,7 +73,7 @@ class RoleController extends Controller
 
     public function permission($id)
     {
-        if(Auth::user()->role_id <= 2) {
+        if(Auth::user()->role_id <= 1) {
             $lims_role_data = Roles::find($id);
             $permissions = Role::findByName($lims_role_data->name)->permissions;
             foreach ($permissions as $permission)

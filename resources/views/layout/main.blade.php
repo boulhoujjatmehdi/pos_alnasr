@@ -237,23 +237,7 @@
                         ['role_id', $role->id]
                     ])->first();
               ?>
-              @if($index_permission_active)
-              <li><a href="#quotation" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-document"></i><span>{{trans('file.Quotation')}}</span><span></a>
-                <ul id="quotation" class="collapse list-unstyled ">
-                  <li id="quotation-list-menu"><a href="{{route('quotations.index')}}">{{trans('file.Quotation List')}}</a></li>
-                  <?php 
-                    $add_permission = DB::table('permissions')->where('name', 'quotes-add')->first();
-                    $add_permission_active = DB::table('role_has_permissions')->where([
-                        ['permission_id', $add_permission->id],
-                        ['role_id', $role->id]
-                    ])->first();
-                  ?>
-                  @if($add_permission_active)
-                  <li id="quotation-create-menu"><a href="{{route('quotations.create')}}">{{trans('file.Add Quotation')}}</a></li>
-                  @endif
-                </ul>
-              </li>
-              @endif
+              
               <?php 
                 $index_permission = DB::table('permissions')->where('name', 'transfers-index')->first();
                 $index_permission_active = DB::table('role_has_permissions')->where([
@@ -777,7 +761,7 @@
                           ['role_id', $role->id]
                       ])->first();
                   ?>
-                  @if($role->id <= 2)
+                  @if($role->id <= 1)
                   <li id="role-menu"><a href="{{route('role.index')}}">{{trans('file.Role Permission')}}</a></li>
                   @endif
                   @if($send_notification_permission_active)

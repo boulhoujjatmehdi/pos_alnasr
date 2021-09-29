@@ -249,6 +249,7 @@ class ProductController extends Controller
         // if($data['last_date'])
         //     $data['last_date'] = date('Y-m-d', strtotime($data['last_date']));
         $data['is_active'] = true;
+        $data['tax_method'] = 1;
         $images = $request->image;
         $image_names = [];
         if($images) {           
@@ -270,9 +271,10 @@ class ProductController extends Controller
             $file->move(public_path('product/files'), $fileName);
             $data['file'] = $fileName;
         }
-        error_log('finish');
-        $lims_product_data = Product::create($data);
         
+        $lims_product_data = Product::create($data);
+        error_log($lims_product_data);
+        error_log('$lims_product_data');
         //dealing with product variant
         // if(isset($data['is_variant'])) {
         //     foreach ($data['variant_name'] as $key => $variant_name) {
@@ -420,7 +422,6 @@ class ProductController extends Controller
                 $data['file'] = $fileName;
             }
 
-            
             $lims_product_data->update($data);
             \Session::flash('edit_message', 'Product updated successfully');  
             
