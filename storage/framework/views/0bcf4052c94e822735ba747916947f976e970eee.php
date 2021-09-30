@@ -20,7 +20,7 @@
                         <label class="d-tc mt-2"><strong><?php echo e(trans('file.Choose Your Date')); ?></strong> &nbsp;</label>
                         <div class="d-tc">
                             <div class="input-group">
-                                <input type="text" class="daterangepicker-field form-control" value="<?php echo e($start_date); ?> To <?php echo e($end_date); ?>" required />
+                                <input type="text" class="daterangepicker-field form-control" style="width:240px;" value="<?php echo e($start_date); ?> To <?php echo e($end_date); ?>" required />
                                 <input type="hidden" name="start_date" value="<?php echo e($start_date); ?>" />
                                 <input type="hidden" name="end_date" value="<?php echo e($end_date); ?>" />
                             </div>

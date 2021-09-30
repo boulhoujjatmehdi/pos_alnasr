@@ -60,7 +60,7 @@ return [
 	"Generate" => "produire",
 	"Promotion Starts" => "La promotion commence",
 	"Promotion Ends" => "Fin de la promotion",
-	"Date" => "Rendez-vous amoureux",
+	"Date" => "Date",
 	"Starting" => "Départ",
 	"Ending" => "Fin",
 	"Print" => "Impression",

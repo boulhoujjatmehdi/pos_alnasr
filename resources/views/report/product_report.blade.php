@@ -19,7 +19,7 @@
                         <label class="d-tc mt-2"><strong>{{trans('file.Choose Your Date')}}</strong> &nbsp;</label>
                         <div class="d-tc">
                             <div class="input-group">
-                                <input type="text" class="daterangepicker-field form-control" value="{{$start_date}} To {{$end_date}}" required />
+                                <input type="text" class="daterangepicker-field form-control" style="width:240px;" value="{{$start_date}} To {{$end_date}}" required />
                                 <input type="hidden" name="start_date" value="{{$start_date}}" />
                                 <input type="hidden" name="end_date" value="{{$end_date}}" />
                             </div>
