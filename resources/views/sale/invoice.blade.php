@@ -99,7 +99,7 @@
         </div>
         <p>{{trans('file.Date')}}: {{$lims_sale_data->created_at}}<br>
             {{trans('file.reference')}}: {{$lims_sale_data->reference_no}}<br>
-            {{-- {{trans('file.customer')}}: {{$lims_customer_data->name}} --}}
+            {{trans('file.customer')}}: {{$lims_customer_data->name}}
         </p>
         <table>
             <tbody>
@@ -154,12 +154,19 @@
             </tfoot>
         </table>
         <table>
+            @php
+                $credit = $lims_sale_data->grand_total;
+            @endphp
+
             <tbody>
                 @foreach($lims_payment_data as $payment_data)
+                @php
+                    $credit = $credit-$payment_data->amount;
+                @endphp
                 <tr style="background-color:#ddd;">
-                    <td style="padding: 5px;width:40%">{{trans('file.Paid By')}}: {{$payment_data->paying_method}}</td>
+                    <td style="padding: 5px;width:40%">{{trans('file.Date')}}: {{$payment_data->created_at}}</td>
                     <td style="padding: 5px;width:40%">{{trans('file.Amount')}}: {{number_format((float)$payment_data->amount, 2, '.', '')}}</td>
-                    <td style="padding: 5px;width:20%">{{trans('file.Change')}}: {{number_format((float)$payment_data->change, 2, '.', '')}}</td>
+                    <td style="padding: 5px;width:20%">{{trans('file.Credit')}}: {{number_format((float)$credit, 2, '.', '')}}</td>
                 </tr>                
                 @endforeach
                 <tr><td class="centered" colspan="3">{{trans('file.Thank you for shopping with us. Please come again')}}</td></tr>

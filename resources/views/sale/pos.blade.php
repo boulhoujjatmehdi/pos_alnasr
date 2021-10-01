@@ -1269,7 +1269,7 @@
                                     <label>{{trans('file.Quantity')}}</label>
                                     <input type="text" name="edit_qty" class="form-control numkey">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group d-none">
                                     <label>{{trans('file.Unit Discount')}}</label>
                                     <input type="text" name="edit_discount" class="form-control numkey">
                                 </div>
@@ -1278,14 +1278,14 @@
                                     <input type="text" name="edit_unit_price" class="form-control numkey" step="any">
                                 </div>
                                 <?php
-                        $tax_name_all[] = 'No Tax';
-                        $tax_rate_all[] = 0;
-                        foreach($lims_tax_list as $tax) {
-                            $tax_name_all[] = $tax->name;
-                            $tax_rate_all[] = $tax->rate;
-                        }
-                    ?>
-                                    <div class="form-group">
+                                    $tax_name_all[] = 'No Tax';
+                                    $tax_rate_all[] = 0;
+                                    foreach($lims_tax_list as $tax) {
+                                        $tax_name_all[] = $tax->name;
+                                        $tax_rate_all[] = $tax->rate;
+                                    }
+                                ?>
+                                    <div class="form-group d-none">
                                         <label>{{trans('file.Tax Rate')}}</label>
                                         <select name="edit_tax_rate" class="form-control selectpicker">
                                             @foreach($tax_name_all as $key => $name)
@@ -1293,7 +1293,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div id="edit_unit" class="form-group">
+                                    <div id="edit_unit" class="form-group d-none">
                                         <label>{{trans('file.Product Unit')}}</label>
                                         <select name="edit_unit" class="form-control selectpicker">
                                         </select>
@@ -1315,7 +1315,7 @@
                     </div>
                     <div class="modal-body">
                       <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.</small></p>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label>{{trans('file.Customer Group')}} *</strong> </label>
                             <select required class="form-control selectpicker" name="customer_group_id">
                                 @foreach($lims_customer_group_all as $customer_group)
@@ -1327,7 +1327,7 @@
                             <label>{{trans('file.name')}} *</strong> </label>
                             <input type="text" name="name" required class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label>{{trans('file.Email')}}</label>
                             <input type="text" name="email" placeholder="example@example.com" class="form-control">
                         </div>
@@ -1335,11 +1335,11 @@
                             <label>{{trans('file.Phone Number')}} </label>
                             <input type="text" name="phone_number"  class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none ">
                             <label>{{trans('file.Address')}} </label>
                             <input type="text" name="address"  class="form-control">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label>{{trans('file.City')}} </label>
                             <input type="text" name="city"  class="form-control">
                         </div>
@@ -1688,7 +1688,7 @@ var product_type = [];
 var product_id = [];
 var product_list = [];
 var qty_list = [];
-
+var product_cost = [];
 // array data with selection
 var product_price = [];
 var product_discount = [];
@@ -1920,6 +1920,7 @@ $.get('sales/getproduct/' + id, function(data) {
     product_list = data[5];
     qty_list = data[6];
     product_warehouse_price = data[7];
+    product_cost = data[8];
     $.each(product_code, function(index) {
         lims_product_array.push(product_code[index] + ' (' + product_name[index] + ')');
     });
@@ -2095,6 +2096,7 @@ $('select[name="warehouse_id"]').on('change', function() {
         product_name = data[1];
         product_qty = data[2];
         product_type = data[3];
+        product_cost = data[8];
         $.each(product_code, function(index) {
             lims_product_array.push(product_code[index] + ' (' + product_name[index] + ')');
         });
@@ -2421,7 +2423,7 @@ function addNewProduct(data){
     var newRow = $("<tr>");
     var cols = '';
     temp_unit_name = (data[6]).split(',');
-    cols += '<td class="col-sm-4 product-title"><button type="button" class="edit-product btn btn-link" data-toggle="modal" data-target="#editModal"><strong>' + data[0] + '</strong></button> [' + data[1] + '] <p>In Stock: <span class="in-stock"></span></p></td>';
+    cols += '<td class="col-sm-4 product-title"><button type="button" class="edit-product btn btn-link" data-toggle="modal" data-target="#editModal"><strong>' + data[0] + '</strong></button> [' + data[1] + '] <p>In Stock: <span class="in-stock"></span>  |   Cost : <span class="it-cost"></span></p></td>';
     cols += '<td class="col-sm-2 product-price"></td>';
     cols += '<td class="col-sm-3"><div class="input-group"><span class="input-group-btn"><button type="button" class="btn btn-default minus"><span class="dripicons-minus"></span></button></span><input type="text" name="qty[]" class="form-control qty numkey input-number" value="1" step="any" required><span class="input-group-btn"><button type="button" class="btn btn-default plus"><span class="dripicons-plus"></span></button></span></div></td>';
     cols += '<td class="col-sm-2 sub-total"></td>';
@@ -2557,6 +2559,8 @@ function checkQuantity(sale_qty, flag) {
     var row_product_code = $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.product-code').val();
     pos = product_code.indexOf(row_product_code);
     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.in-stock').text(product_qty[pos]);
+    $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.it-cost').text(product_cost[pos]);
+    console.log(product_cost[pos]);
     if(product_type[pos] == 'standard'){
         var operator = unit_operator[rowindex].split(',');
         var operation_value = unit_operation_value[rowindex].split(',');

@@ -786,12 +786,14 @@ class SaleController extends Controller
         $product_name = [];
         $product_qty = [];
         $product_price = [];
+        $product_cost = [];
         $product_data = [];
         //product without variant
         foreach ($lims_product_warehouse_data as $product_warehouse) 
         {
             $product_qty[] = $product_warehouse->qty;
             $product_price[] = $product_warehouse->price;
+            
             $lims_product_data = Product::find($product_warehouse->product_id);
             $product_code[] =  $lims_product_data->code;
             $product_name[] = htmlspecialchars($lims_product_data->name);
@@ -799,33 +801,12 @@ class SaleController extends Controller
             $product_id[] = $lims_product_data->id;
             $product_list[] = $lims_product_data->product_list;
             $qty_list[] = $lims_product_data->qty_list;
+            $product_cost[] = $lims_product_data->cost;
+
+
         }
-        //product with variant
-        foreach ($lims_product_with_variant_warehouse_data as $product_warehouse) 
-        {
-            $product_qty[] = $product_warehouse->qty;
-            $lims_product_data = Product::find($product_warehouse->product_id);
-            $lims_product_variant_data = ProductVariant::select('item_code')->FindExactProduct($product_warehouse->product_id, $product_warehouse->variant_id)->first();
-            $product_code[] =  $lims_product_variant_data->item_code;
-            $product_name[] = htmlspecialchars($lims_product_data->name);
-            $product_type[] = $lims_product_data->type;
-            $product_id[] = $lims_product_data->id;
-            $product_list[] = $lims_product_data->product_list;
-            $qty_list[] = $lims_product_data->qty_list;
-        }
-        //retrieve product with type of digital and combo
-        $lims_product_data = Product::whereNotIn('type', ['standard'])->where('is_active', true)->get();
-        foreach ($lims_product_data as $product) 
-        {
-            $product_qty[] = $product->qty;
-            $product_code[] =  $product->code;
-            $product_name[] = $product->name;
-            $product_type[] = $product->type;
-            $product_id[] = $product->id;
-            $product_list[] = $product->product_list;
-            $qty_list[] = $product->qty_list;
-        }
-        $product_data = [$product_code, $product_name, $product_qty, $product_type, $product_id, $product_list, $qty_list, $product_price];
+
+        $product_data = [$product_code, $product_name, $product_qty, $product_type, $product_id, $product_list, $qty_list, $product_price, $product_cost ];
         return $product_data;
     }
 
@@ -1553,7 +1534,7 @@ class SaleController extends Controller
         $lims_warehouse_data = Warehouse::find($lims_sale_data->warehouse_id);
         $lims_customer_data = Customer::find($lims_sale_data->customer_id);
         $lims_payment_data = Payment::where('sale_id', $id)->get();
-
+        // dd($lims_payment_data);
         $numberToWords = new NumberToWords();
         if(\App::getLocale() == 'ar' || \App::getLocale() == 'hi' || \App::getLocale() == 'vi' || \App::getLocale() == 'en-gb')
             $numberTransformer = $numberToWords->getNumberTransformer('en');

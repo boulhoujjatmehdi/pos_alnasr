@@ -101,7 +101,8 @@
         </div>
         <p><?php echo e(trans('file.Date')); ?>: <?php echo e($lims_sale_data->created_at); ?><br>
             <?php echo e(trans('file.reference')); ?>: <?php echo e($lims_sale_data->reference_no); ?><br>
-            
+            <?php echo e(trans('file.customer')); ?>: <?php echo e($lims_customer_data->name); ?>
+
         </p>
         <table>
             <tbody>
@@ -158,12 +159,19 @@
             </tfoot>
         </table>
         <table>
+            <?php
+                $credit = $lims_sale_data->grand_total;
+            ?>
+
             <tbody>
                 <?php $__currentLoopData = $lims_payment_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $payment_data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php
+                    $credit = $credit-$payment_data->amount;
+                ?>
                 <tr style="background-color:#ddd;">
-                    <td style="padding: 5px;width:40%"><?php echo e(trans('file.Paid By')); ?>: <?php echo e($payment_data->paying_method); ?></td>
+                    <td style="padding: 5px;width:40%"><?php echo e(trans('file.Date')); ?>: <?php echo e($payment_data->created_at); ?></td>
                     <td style="padding: 5px;width:40%"><?php echo e(trans('file.Amount')); ?>: <?php echo e(number_format((float)$payment_data->amount, 2, '.', '')); ?></td>
-                    <td style="padding: 5px;width:20%"><?php echo e(trans('file.Change')); ?>: <?php echo e(number_format((float)$payment_data->change, 2, '.', '')); ?></td>
+                    <td style="padding: 5px;width:20%"><?php echo e(trans('file.Credit')); ?>: <?php echo e(number_format((float)$credit, 2, '.', '')); ?></td>
                 </tr>                
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <tr><td class="centered" colspan="3"><?php echo e(trans('file.Thank you for shopping with us. Please come again')); ?></td></tr>

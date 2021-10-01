@@ -85,7 +85,7 @@ class CustomerController extends Controller
             $message = 'Customer created successfully';
         }
         
-        $lims_customer_data['name'] = $lims_customer_data['customer_name'];
+        $lims_customer_data['name'] = $lims_customer_data['name'];
         
         if($lims_customer_data['email']) {
             try{
@@ -98,7 +98,15 @@ class CustomerController extends Controller
                 $message = 'Customer created successfully. Please setup your <a href="setting/mail_setting">mail setting</a> to send mail.';
             }   
         }
-
+        if(!($lims_customer_data['phone_number'])){
+            $lims_customer_data['phone_number']='0666666666';
+        }
+        if(!($lims_customer_data['address'])){
+            $lims_customer_data['address']='address';
+        }
+        if(!($lims_customer_data['city'])){
+            $lims_customer_data['city']='city';
+        }
         Customer::create($lims_customer_data);
         if($lims_customer_data['pos'])
             return redirect('pos')->with('message', $message);

@@ -27,7 +27,7 @@
                 <?php $__currentLoopData = $lims_adjustment_all; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$adjustment): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr data-id="<?php echo e($adjustment->id); ?>">
                     <td><?php echo e($key); ?></td>
-                    <td><?php echo e(date('d-m-Y', strtotime($adjustment->created_at->toDateString())) . ' '. $adjustment->created_at->toTimeString()); ?></td>
+                    <td><?php echo e(date('d-m-Y', strtotime($adjustment->created_at->toDateString())) . ' '. $adjustment->created_at->toTimeString('minute')); ?></td>
                     <td><?php echo e($adjustment->reference_no); ?></td>
                     <?php $warehouse = DB::table('warehouses')->find($adjustment->warehouse_id) ?>
                     <td><?php echo e($warehouse->name); ?></td>

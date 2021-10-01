@@ -363,9 +363,7 @@
                   @if($department_active)
                   <li id="dept-menu"><a href="{{route('departments.index')}}">{{trans('file.Department')}}</a></li>
                   @endif
-                  @if($index_employee_active)
-                  <li id="employee-menu"><a href="{{route('employees.index')}}">{{trans('file.Employee')}}</a></li>
-                  @endif
+
                   @if($attendance_active)
                   <li id="attendance-menu"><a href="{{route('attendance.index')}}">{{trans('file.Attendance')}}</a></li>
                   @endif
@@ -409,6 +407,11 @@
               <li><a href="#people" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-user"></i><span>{{trans('file.People')}}</span></a>
                 <ul id="people" class="collapse list-unstyled ">
                   
+                  @if($index_employee_active)
+                  <li id="employee-menu"><a href="{{route('employees.index')}}">{{trans('file.Employee')}}</a></li>
+                  @endif
+
+
                   @if($user_index_permission_active)
                   <li id="user-list-menu"><a href="{{route('user.index')}}">{{trans('file.User List')}}</a></li>
                   <?php $user_add_permission_active = DB::table('permissions')

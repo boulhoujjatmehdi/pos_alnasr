@@ -495,7 +495,7 @@ function productSearch(data) {
                 cols += '<td class="net_unit_cost"></td>';
                 cols += '<td class="discount d-none ">0.00</td>';
                 cols += '<td class="tax d-none"></td>';
-                cols += '<td class="sub-total "></td>';
+                cols += '<td class="sub-total"></td>';
                 cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><?php echo e(trans("file.delete")); ?></button></td>';
                 cols += '<input type="hidden" class="product-code" name="product_code[]" value="' + data[1] + '"/>';
                 cols += '<input type="hidden" class="product-id" name="product_id[]" value="' + data[9] + '"/>';

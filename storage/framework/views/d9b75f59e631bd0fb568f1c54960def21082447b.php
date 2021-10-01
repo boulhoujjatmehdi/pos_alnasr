@@ -50,7 +50,7 @@
                 ?>
                 <tr>
                     <td></td>
-                    <td><?php echo e(date($general_setting->date_format, strtotime($payment->created_at->toDateString())) . ' '. $payment->created_at->toTimeString()); ?></td>
+                    <td><?php echo e(date($general_setting->date_format, strtotime($payment->created_at->toDateString())) . ' '. $payment->created_at->toTimeString('minute')); ?></td>
                     <td><?php echo e($payment->payment_reference); ?></td>
                     <td><?php if($sale): ?><?php echo e($sale->reference_no); ?><?php endif; ?></td>
                     <td><?php if($purchase): ?><?php echo e($purchase->reference_no); ?><?php endif; ?></td>

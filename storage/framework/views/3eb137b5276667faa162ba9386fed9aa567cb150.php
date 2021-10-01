@@ -363,9 +363,7 @@
                   <?php if($department_active): ?>
                   <li id="dept-menu"><a href="<?php echo e(route('departments.index')); ?>"><?php echo e(trans('file.Department')); ?></a></li>
                   <?php endif; ?>
-                  <?php if($index_employee_active): ?>
-                  <li id="employee-menu"><a href="<?php echo e(route('employees.index')); ?>"><?php echo e(trans('file.Employee')); ?></a></li>
-                  <?php endif; ?>
+
                   <?php if($attendance_active): ?>
                   <li id="attendance-menu"><a href="<?php echo e(route('attendance.index')); ?>"><?php echo e(trans('file.Attendance')); ?></a></li>
                   <?php endif; ?>
@@ -409,6 +407,11 @@
               <li><a href="#people" aria-expanded="false" data-toggle="collapse"> <i class="dripicons-user"></i><span><?php echo e(trans('file.People')); ?></span></a>
                 <ul id="people" class="collapse list-unstyled ">
                   
+                  <?php if($index_employee_active): ?>
+                  <li id="employee-menu"><a href="<?php echo e(route('employees.index')); ?>"><?php echo e(trans('file.Employee')); ?></a></li>
+                  <?php endif; ?>
+
+
                   <?php if($user_index_permission_active): ?>
                   <li id="user-list-menu"><a href="<?php echo e(route('user.index')); ?>"><?php echo e(trans('file.User List')); ?></a></li>
                   <?php $user_add_permission_active = DB::table('permissions')
