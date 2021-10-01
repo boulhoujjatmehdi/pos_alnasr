@@ -41,7 +41,7 @@
                 ?>
                 <tr class="transfer-link" data-transfer='["<?php echo e(date($general_setting->date_format, strtotime($transfer->created_at->toDateString()))); ?>", "<?php echo e($transfer->reference_no); ?>", "<?php echo e($status); ?>", "<?php echo e($transfer->id); ?>", "<?php echo e($transfer->fromWarehouse->name); ?>", "<?php echo e($transfer->fromWarehouse->phone); ?>", "<?php echo e($transfer->fromWarehouse->address); ?>", "<?php echo e($transfer->toWarehouse->name); ?>", "<?php echo e($transfer->toWarehouse->phone); ?>", "<?php echo e($transfer->toWarehouse->address); ?>", "<?php echo e($transfer->total_tax); ?>", "<?php echo e($transfer->total_cost); ?>", "<?php echo e($transfer->shipping_cost); ?>", "<?php echo e($transfer->grand_total); ?>", "<?php echo e($transfer->note); ?>", "<?php echo e($transfer->user->name); ?>", "<?php echo e($transfer->user->email); ?>"]'>
                     <td><?php echo e($key); ?></td>
-                    <td><?php echo e(date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString()); ?></td>
+                    <td><?php echo e(date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString('minute')); ?></td>
                     <td><?php echo e($transfer->reference_no); ?></td>
                     <td><?php echo e($transfer->fromWarehouse->name); ?></td>
                     <td><?php echo e($transfer->toWarehouse->name); ?></td>

@@ -80,7 +80,7 @@
                         <tr>
                             <td>{{$key}}</td>
                             
-                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString('minute')}}</td>
                             <td>{{$sale->reference_no}}</td>
                             <td>{{$sale->warehouse->name}}</td>
                             <td>
@@ -186,7 +186,7 @@
                         @foreach($lims_return_data as $key=>$return)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString('minute')}}</td>
                             <td>{{$return->reference_no}}</td>
                             <td>{{$return->warehouse->name}}</td>
                             <td>{{$return->biller->name}}</td>
@@ -249,7 +249,7 @@
                             <?php
                                 $supplier = DB::table('suppliers')->find($quotation->supplier_id);
                             ?>
-                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString('minute')}}</td>
                             <td>{{$quotation->reference_no}}</td>
                             <td>{{$quotation->warehouse->name}}</td>
                             @if($supplier)

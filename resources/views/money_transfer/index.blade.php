@@ -27,7 +27,7 @@
                 @foreach($lims_money_transfer_all as $key=>$money_transfer)
                 <tr data-id="{{$money_transfer->id}}">
                     <td>{{$key}}</td>
-                    <td>{{date($general_setting->date_format, strtotime($money_transfer->created_at->toDateString())) . ' '. $money_transfer->created_at->toTimeString() }}</td>
+                    <td>{{date($general_setting->date_format, strtotime($money_transfer->created_at->toDateString())) . ' '. $money_transfer->created_at->toTimeString('minute')}}</td>
                     <td>{{ $money_transfer->reference_no }}</td>
                     <td>{{ $money_transfer->fromAccount->name }}</td>
                     <td>{{ $money_transfer->toAccount->name }}</td>

@@ -48,7 +48,7 @@
                 ?>
                 <tr>
                     <td></td>
-                    <td>{{date($general_setting->date_format, strtotime($payment->created_at->toDateString())) . ' '. $payment->created_at->toTimeString()}}</td>
+                    <td>{{date($general_setting->date_format, strtotime($payment->created_at->toDateString())) . ' '. $payment->created_at->toTimeString('minute')}}</td>
                     <td>{{$payment->payment_reference}}</td>
                     <td>@if($sale){{$sale->reference_no}}@endif</td>
                     <td>@if($purchase){{$purchase->reference_no}}@endif</td>

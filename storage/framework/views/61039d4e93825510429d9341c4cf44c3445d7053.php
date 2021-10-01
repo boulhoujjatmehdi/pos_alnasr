@@ -34,7 +34,7 @@
                 ?>
                 <tr data-id="<?php echo e($expense->id); ?>">
                     <td><?php echo e($key); ?></td>
-                    <td><?php echo e(date($general_setting->date_format, strtotime($expense->created_at->toDateString())) . ' '. $expense->created_at->toTimeString()); ?></td>
+                    <td><?php echo e(date($general_setting->date_format, strtotime($expense->created_at->toDateString())) . ' '. $expense->created_at->toTimeString('minute')); ?></td>
                     <td><?php echo e($expense->reference_no); ?></td>
                     <td><?php echo e($warehouse->name); ?></td>
                     <td><?php echo e($expense_category->name); ?></td>

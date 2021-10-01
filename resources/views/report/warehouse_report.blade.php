@@ -83,7 +83,7 @@
                         @foreach($lims_sale_data as $key=>$sale)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString('minute')}}</td>
                             <td>{{$sale->reference_no}}</td>
                             <td>{{$sale->customer->name}}</td>
                             <td>
@@ -155,7 +155,7 @@
                             <?php 
                                 $supplier = DB::table('suppliers')->find($purchase->supplier_id);
                             ?>
-                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString('minute')}}</td>
                             <td>{{$purchase->reference_no}}</td>
                             @if($supplier)
                             <td>{{$supplier->name}}</td>
@@ -234,7 +234,7 @@
                             <?php 
                                 $supplier = DB::table('suppliers')->find($quotation->supplier_id);
                             ?>
-                            <td>{{ date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) }}<br>{{$quotation->created_at->toTimeString()}}</td>
+                            <td>{{ date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) }}<br>{{$quotation->created_at->toTimeString('minute')}}</td>
                             <td>{{$quotation->reference_no}}</td>
                             <td>{{$quotation->customer->name}}</td>
                             @if($supplier)
@@ -303,7 +303,7 @@
                         @foreach($lims_return_data as $key=>$return)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{ date($general_setting->date_format, strtotime($return->created_at->toDateString())) }}<br>{{ $return->created_at->toTimeString()}}</td>
+                            <td>{{ date($general_setting->date_format, strtotime($return->created_at->toDateString())) }}<br>{{ $return->created_at->toTimeString('minute')}}</td>
                             <td>{{$return->reference_no}}</td>
                             <td>{{$return->customer->name}}</td>
                             <td>{{$return->biller->name}}</td>
@@ -361,7 +361,7 @@
                         @foreach($lims_expense_data as $key=>$expense)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{ date($general_setting->date_format, strtotime($expense->created_at->toDateString())) }}<br>{{ $expense->created_at->toTimeString() }}</td>
+                            <td>{{ date($general_setting->date_format, strtotime($expense->created_at->toDateString())) }}<br>{{ $expense->created_at->toTimeString('minute')}}</td>
                             <td>{{$expense->reference_no}}</td>
                             <td>{{$expense->expenseCategory->name}}</td>
                             <td>{{$expense->amount}}</td>

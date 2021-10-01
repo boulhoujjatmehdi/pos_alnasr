@@ -88,7 +88,7 @@
                         @foreach($lims_sale_data as $key=>$sale)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString('minute')}}</td>
                             <td>{{$sale->reference_no}}</td>
                             <td>{{$sale->customer->name}}</td>
                             <td>{{$sale->warehouse->name}}</td>
@@ -167,7 +167,7 @@
                             <?php 
                                 $supplier = DB::table('suppliers')->find($purchase->supplier_id);
                             ?>
-                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString('minute')}}</td>
                             <td>{{$purchase->reference_no}}</td>
                             @if($supplier)
                             <td>{{$supplier->name}}</td>
@@ -245,7 +245,7 @@
                         @foreach($lims_quotation_data as $key=>$quotation)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString('minute')}}</td>
                             <td>{{$quotation->reference_no}}</td>
                             <td>{{$quotation->customer->name}}</td>
                             <td>{{$quotation->warehouse->name}}</td>
@@ -312,7 +312,7 @@
                         @foreach($lims_transfer_data as $key=>$transfer)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString('minute')}}</td>
                             <td>{{$transfer->reference_no}}</td>
                             <td>{{$transfer->fromWarehouse->name}}</td>
                             <td>{{$transfer->toWarehouse->name}}</td>

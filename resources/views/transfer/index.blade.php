@@ -41,7 +41,7 @@
                 ?>
                 <tr class="transfer-link" data-transfer='["{{date($general_setting->date_format, strtotime($transfer->created_at->toDateString()))}}", "{{$transfer->reference_no}}", "{{$status}}", "{{$transfer->id}}", "{{$transfer->fromWarehouse->name}}", "{{$transfer->fromWarehouse->phone}}", "{{$transfer->fromWarehouse->address}}", "{{$transfer->toWarehouse->name}}", "{{$transfer->toWarehouse->phone}}", "{{$transfer->toWarehouse->address}}", "{{$transfer->total_tax}}", "{{$transfer->total_cost}}", "{{$transfer->shipping_cost}}", "{{$transfer->grand_total}}", "{{$transfer->note}}", "{{$transfer->user->name}}", "{{$transfer->user->email}}"]'>
                     <td>{{$key}}</td>
-                    <td>{{ date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString() }}</td>
+                    <td>{{ date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString('minute')}}</td>
                     <td>{{ $transfer->reference_no }}</td>
                     <td>{{ $transfer->fromWarehouse->name }}</td>
                     <td>{{ $transfer->toWarehouse->name }}</td>

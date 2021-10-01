@@ -41,7 +41,7 @@
                 @foreach($lims_sale_data as $key=>$sale_data)
                 <tr>
                     <td>{{$key}}</td>
-                    <td>{{date($general_setting->date_format, strtotime($sale_data->created_at->toDateString())) . ' '. $sale_data->created_at->toTimeString()}}</td>
+                    <td>{{date($general_setting->date_format, strtotime($sale_data->created_at->toDateString())) . ' '. $sale_data->created_at->toTimeString('minute')}}</td>
                     <td>{{$sale_data->reference_no}}</td>
                     <?php
                         $customer = DB::table('customers')->find($sale_data->customer_id);

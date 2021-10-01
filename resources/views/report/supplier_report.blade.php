@@ -86,7 +86,7 @@
                                 else
                                     $status = 'Ordered';
                             ?>
-                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString('minute')}}</td>
                             <td>{{$purchase->reference_no}}</td>
                             <td>{{$purchase->warehouse->name}}</td>
                             <td>
@@ -182,7 +182,7 @@
                         @foreach($lims_return_data as $key=>$return)
                         <tr>
                             <td>{{$key}}</td>
-                            <td>{{date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString('minute')}}</td>
                             <td>{{$return->reference_no}}</td>
                             <td>{{$return->warehouse->name}}</td>
                             <td>
@@ -246,7 +246,7 @@
                                 elseif($quotation->quotation_status == 2)
                                     $status = 'Sent';
                             ?>
-                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString()}}</td>
+                            <td>{{date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString('minute')}}</td>
                             <td>{{$quotation->reference_no}}</td>
                             <td>{{$quotation->warehouse->name}}</td>
                             <td>{{$quotation->customer->name}}</td>

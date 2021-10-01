@@ -28,7 +28,7 @@
                 @foreach($lims_adjustment_all as $key=>$adjustment)
                 <tr data-id="{{$adjustment->id}}">
                     <td>{{$key}}</td>
-                    <td>{{ date('d-m-Y', strtotime($adjustment->created_at->toDateString())) . ' '. $adjustment->created_at->toTimeString() }}</td>
+                    <td>{{ date('d-m-Y', strtotime($adjustment->created_at->toDateString())) . ' '. $adjustment->created_at->toTimeString('minute')}}</td>
                     <td>{{ $adjustment->reference_no }}</td>
                     <?php $warehouse = DB::table('warehouses')->find($adjustment->warehouse_id) ?>
                     <td>{{ $warehouse->name }}</td>
