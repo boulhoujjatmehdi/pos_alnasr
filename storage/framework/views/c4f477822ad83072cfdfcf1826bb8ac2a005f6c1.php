@@ -43,7 +43,7 @@
                 <?php $__currentLoopData = $lims_sale_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$sale_data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td><?php echo e($key); ?></td>
-                    <td><?php echo e(date($general_setting->date_format, strtotime($sale_data->created_at->toDateString())) . ' '. $sale_data->created_at->toTimeString()); ?></td>
+                    <td><?php echo e(date($general_setting->date_format, strtotime($sale_data->created_at->toDateString())) . ' '. $sale_data->created_at->toTimeString('minute')); ?></td>
                     <td><?php echo e($sale_data->reference_no); ?></td>
                     <?php
                         $customer = DB::table('customers')->find($sale_data->customer_id);

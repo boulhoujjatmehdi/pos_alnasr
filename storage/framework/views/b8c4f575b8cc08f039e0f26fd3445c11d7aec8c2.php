@@ -88,7 +88,7 @@
                                 else
                                     $status = 'Ordered';
                             ?>
-                            <td><?php echo e(date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($purchase->created_at->toDateString())) . ' '. $purchase->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($purchase->reference_no); ?></td>
                             <td><?php echo e($purchase->warehouse->name); ?></td>
                             <td>
@@ -184,7 +184,7 @@
                         <?php $__currentLoopData = $lims_return_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$return): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($key); ?></td>
-                            <td><?php echo e(date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($return->reference_no); ?></td>
                             <td><?php echo e($return->warehouse->name); ?></td>
                             <td>
@@ -250,7 +250,7 @@
                                 elseif($quotation->quotation_status == 2)
                                     $status = 'Sent';
                             ?>
-                            <td><?php echo e(date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($quotation->reference_no); ?></td>
                             <td><?php echo e($quotation->warehouse->name); ?></td>
                             <td><?php echo e($quotation->customer->name); ?></td>

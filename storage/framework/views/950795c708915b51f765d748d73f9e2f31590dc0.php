@@ -79,8 +79,7 @@
                                                         <th><?php echo e(trans('file.Code')); ?></th>
                                                         <th><?php echo e(trans('file.Quantity')); ?></th>
                                                         <th><?php echo e(trans('file.Net Unit Price')); ?></th>
-                                                        <th><?php echo e(trans('file.Discount')); ?></th>
-                                                        <th><?php echo e(trans('file.Tax')); ?></th>
+
                                                         <th><?php echo e(trans('file.Subtotal')); ?></th>
                                                         <th><i class="dripicons-trash"></i></th>
                                                     </tr>
@@ -150,8 +149,8 @@
                                                         <td><?php echo e($product_data->code); ?></td>
                                                         <td><input type="number" class="form-control qty" name="qty[]" value="<?php echo e($product_sale->qty); ?>" step="any" required/></td>
                                                         <td class="net_unit_price"><?php echo e(number_format((float)$product_sale->net_unit_price, 2, '.', '')); ?> </td>
-                                                        <td class="discount"><?php echo e(number_format((float)$product_sale->discount, 2, '.', '')); ?></td>
-                                                        <td class="tax"><?php echo e(number_format((float)$product_sale->tax, 2, '.', '')); ?></td>
+                                                        <td class="discount d-none"><?php echo e(number_format((float)$product_sale->discount, 2, '.', '')); ?></td>
+                                                        <td class="tax d-none"><?php echo e(number_format((float)$product_sale->tax, 2, '.', '')); ?></td>
                                                         <td class="sub-total"><?php echo e(number_format((float)$product_sale->total, 2, '.', '')); ?></td>
                                                         <td><button type="button" class="ibtnDel btn btn-md btn-danger"><?php echo e(trans("file.delete")); ?></button></td>
                                                         <input type="hidden" class="product-code" name="product_code[]" value="<?php echo e($product_data->code); ?>"/>
@@ -179,8 +178,8 @@
                                                     <th colspan="2"><?php echo e(trans('file.Total')); ?></th>
                                                     <th id="total-qty"><?php echo e($lims_sale_data->total_qty); ?></th>
                                                     <th></th>
-                                                    <th id="total-discount"><?php echo e(number_format((float)$lims_sale_data->total_discount, 2, '.', '')); ?></th>
-                                                    <th id="total-tax"><?php echo e(number_format((float)$lims_sale_data->total_tax, 2, '.', '')); ?></th>
+                                                    <th id="total-discount" class="d-none"><?php echo e(number_format((float)$lims_sale_data->total_discount, 2, '.', '')); ?></th>
+                                                    <th id="total-tax" class="d-none"><?php echo e(number_format((float)$lims_sale_data->total_tax, 2, '.', '')); ?></th>
                                                     <th id="total"><?php echo e(number_format((float)$lims_sale_data->total_price, 2, '.', '')); ?></th>
                                                     <th><i class="dripicons-trash"></i></th>
                                                 </tfoot>
@@ -234,7 +233,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+                                <div class="row mt-3 d-none">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <input type="hidden" name="order_tax_rate_hidden" value="<?php echo e($lims_sale_data->order_tax_rate); ?>">
@@ -304,13 +303,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-10">
                                         <div class="form-group">
                                             <label><?php echo e(trans('file.Sale Note')); ?></label>
                                             <textarea rows="5" class="form-control" name="sale_note" ><?php echo e($lims_sale_data->sale_note); ?></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 d-none">
                                         <div class="form-group">
                                             <label><?php echo e(trans('file.Staff Note')); ?></label>
                                             <textarea rows="5" class="form-control" name="staff_note"><?php echo e($lims_sale_data->staff_note); ?></textarea>

@@ -53,11 +53,11 @@
             <div class="container mt-3 pb-2 border-bottom">
                 <div class="row">
                     <div class="col-md-3">
-                        <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="dripicons-print"></i> {{trans('file.Print')}}</button>
+                        <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none d-none"><i class="dripicons-print"></i> {{trans('file.Print')}}</button>
                         
                         {{ Form::open(['route' => 'sale.sendmail', 'method' => 'post', 'class' => 'sendmail-form'] ) }}
                             <input type="hidden" name="sale_id">
-                            <button class="btn btn-default btn-sm d-print-none"><i class="dripicons-mail"></i> {{trans('file.Email')}}</button>
+                            <button class="btn btn-default btn-sm d-print-none d-none"><i class="dripicons-mail"></i> {{trans('file.Email')}}</button>
                         {{ Form::close() }}
                     </div>
                     <div class="col-md-6">
@@ -233,11 +233,7 @@
                             <label>{{trans('file.Paid By')}}</label>
                             <select name="edit_paid_by_id" class="form-control selectpicker">
                                 <option value="1">Cash</option>
-                                <option value="2">Gift Card</option>
-                                <option value="3">Credit Card</option>
-                                <option value="4">Cheque</option>
-                                <option value="5">Paypal</option>
-                                <option value="6">Deposit</option>
+
                             </select>
                         </div>
                     </div>
@@ -822,7 +818,7 @@
     function saleDetails(sale){
         $("#sale-details input[name='sale_id']").val(sale[13]);
 
-        var htmltext = '<strong>{{trans("file.Date")}}: </strong>'+sale[0]+'<br><strong>{{trans("file.reference")}}: </strong>'+sale[1]+'<br><strong>{{trans("file.Warehouse")}}: </strong>'+sale[27]+'<br><strong>{{trans("file.Sale Status")}}: </strong>'+sale[2]+'<br><br><div class="row"><div class="col-md-6"><strong>{{trans("file.From")}}:</strong><br>'+sale[3]+'<br>'+sale[4]+'<br>'+sale[5]+'<br>'+sale[6]+'<br>'+sale[7]+'<br>'+sale[8]+'</div><div class="col-md-6"><div class="float-right"><strong>{{trans("file.To")}}:</strong><br>'+sale[9]+'<br>'+sale[10]+'<br>'+sale[11]+'<br>'+sale[12]+'</div></div></div>';
+        var htmltext = '<strong>{{trans("file.Date")}}: </strong>'+sale[0]+'<br><strong>{{trans("file.reference")}}: </strong>'+sale[1]+'<br><strong>{{trans("file.Warehouse")}}: </strong>'+sale[27]+'<br><strong>{{trans("file.Sale Status")}}: </strong>'+sale[2]+'<br><br><div class="row"><div class="col-md-6"><strong>{{trans("file.From")}}:</strong><br>'+sale[3]+'<br>'+sale[4]+'<br>'+sale[5]+'</div><div class="col-md-6"><div class="float-right"><strong>{{trans("file.To")}}:</strong><br>'+sale[9]+'</div></div></div>';
         $.get('sales/product_sale/' + sale[13], function(data){
             $(".product-sale-list tbody").remove();
             var name_code = data[0];
@@ -856,41 +852,11 @@
             newRow.append(cols);
             newBody.append(newRow);
 
-            var newRow = $("<tr>");
-            cols = '';
-            cols += '<td colspan=6><strong>{{trans("file.Order Tax")}}:</strong></td>';
-            cols += '<td>' + sale[17] + '(' + sale[18] + '%)' + '</td>';
-            newRow.append(cols);
-            newBody.append(newRow);
 
-            var newRow = $("<tr>");
-            cols = '';
-            cols += '<td colspan=6><strong>{{trans("file.Order Discount")}}:</strong></td>';
-            cols += '<td>' + sale[19] + '</td>';
-            newRow.append(cols);
-            newBody.append(newRow);
-            if(sale[28]) {
-                var newRow = $("<tr>");
-                cols = '';
-                cols += '<td colspan=6><strong>{{trans("file.Coupon Discount")}} ['+sale[28]+']:</strong></td>';
-                cols += '<td>' + sale[29] + '</td>';
-                newRow.append(cols);
-                newBody.append(newRow);
-            }
 
-            var newRow = $("<tr>");
-            cols = '';
-            cols += '<td colspan=6><strong>{{trans("file.Shipping Cost")}}:</strong></td>';
-            cols += '<td>' + sale[20] + '</td>';
-            newRow.append(cols);
-            newBody.append(newRow);
 
-            var newRow = $("<tr>");
-            cols = '';
-            cols += '<td colspan=6><strong>{{trans("file.grand total")}}:</strong></td>';
-            cols += '<td>' + sale[21] + '</td>';
-            newRow.append(cols);
-            newBody.append(newRow);
+
+
 
             var newRow = $("<tr>");
             cols = '';
@@ -908,7 +874,7 @@
 
             $("table.product-sale-list").append(newBody);
         });
-        var htmlfooter = '<p><strong>{{trans("file.Sale Note")}}:</strong> '+sale[23]+'</p><p><strong>{{trans("file.Staff Note")}}:</strong> '+sale[24]+'</p><strong>{{trans("file.Created By")}}:</strong><br>'+sale[25]+'<br>'+sale[26];
+        var htmlfooter = '<p><strong>{{trans("file.Sale Note")}}:</strong> '+sale[23]+'</p><strong>{{trans("file.Created By")}}:</strong><br>'+sale[25];
         $('#sale-content').html(htmltext);
         $('#sale-footer').html(htmlfooter);
         $('#sale-details').modal('show');

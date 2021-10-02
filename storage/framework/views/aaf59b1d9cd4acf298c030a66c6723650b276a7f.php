@@ -44,8 +44,7 @@
                                             <label><?php echo e(trans('file.Purchase Status')); ?></label>
                                             <select name="status" class="form-control">
                                                 <option value="1"><?php echo e(trans('file.Recieved')); ?></option>
-                                                <option value="2"><?php echo e(trans('file.Partial')); ?></option>
-                                                <option value="3"><?php echo e(trans('file.Pending')); ?></option>
+                                                <option value="2"><?php echo e(trans('file.Partial')); ?></option>                                                
                                                 <option value="4"><?php echo e(trans('file.Ordered')); ?></option>
                                             </select>
                                         </div>

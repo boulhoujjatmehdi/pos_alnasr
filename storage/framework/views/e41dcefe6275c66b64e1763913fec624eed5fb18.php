@@ -53,8 +53,7 @@
                                             <input type="hidden" name="status_hidden" value="<?php echo e($lims_purchase_data->status); ?>">
                                             <select name="status" class="form-control">
                                                 <option value="1"><?php echo e(trans('file.Recieved')); ?></option>
-                                                <option value="2"><?php echo e(trans('file.Partial')); ?></option>
-                                                <option value="3"><?php echo e(trans('file.Pending')); ?></option>
+                                                <option value="2"><?php echo e(trans('file.Partial')); ?></option>                                                
                                                 <option value="4"><?php echo e(trans('file.Ordered')); ?></option>
                                             </select>
                                         </div>
@@ -90,8 +89,7 @@
                                                         <th><?php echo e(trans('file.Quantity')); ?></th>
                                                         <th class="recieved-product-qty d-none"><?php echo e(trans('file.Recieved')); ?></th>
                                                         <th><?php echo e(trans('file.Net Unit Cost')); ?></th>
-                                                        <th><?php echo e(trans('file.Discount')); ?></th>
-                                                        <th><?php echo e(trans('file.Tax')); ?></th>
+
                                                         <th><?php echo e(trans('file.Subtotal')); ?></th>
                                                         <th><i class="dripicons-trash"></i></th>
                                                     </tr>
@@ -150,8 +148,8 @@
                                                         <td><input type="number" class="form-control qty" name="qty[]" value="<?php echo e($product_purchase->qty); ?>" step="any" required /></td>
                                                         <td class="recieved-product-qty d-none"><input type="number" class="form-control recieved" name="recieved[]" value="<?php echo e($product_purchase->recieved); ?>" step="any"/></td>
                                                         <td class="net_unit_cost"><?php echo e(number_format((float)$product_purchase->net_unit_cost, 2, '.', '')); ?> </td>
-                                                        <td class="discount"><?php echo e(number_format((float)$product_purchase->discount, 2, '.', '')); ?></td>
-                                                        <td class="tax"><?php echo e(number_format((float)$product_purchase->tax, 2, '.', '')); ?></td>
+                                                        <td class="discount d-none"><?php echo e(number_format((float)$product_purchase->discount, 2, '.', '')); ?></td>
+                                                        <td class="tax d-none"><?php echo e(number_format((float)$product_purchase->tax, 2, '.', '')); ?></td>
                                                         <td class="sub-total"><?php echo e(number_format((float)$product_purchase->total, 2, '.', '')); ?></td>
                                                         <td><button type="button" class="ibtnDel btn btn-md btn-danger"><?php echo e(trans("file.delete")); ?></button></td>
                                                         <input type="hidden" class="product-id" name="product_id[]" value="<?php echo e($product_data->id); ?>"/>
@@ -179,8 +177,8 @@
                                                     <th id="total-qty"><?php echo e($lims_purchase_data->total_qty); ?></th>
                                                     <th></th>
                                                     <th class="recieved-product-qty d-none"></th>
-                                                    <th id="total-discount"><?php echo e(number_format((float)$lims_purchase_data->total_discount, 2, '.', '')); ?></th>
-                                                    <th id="total-tax"><?php echo e(number_format((float)$lims_purchase_data->total_tax, 2, '.', '')); ?></th>
+                                                    <th id="total-discount" class="d-none"><?php echo e(number_format((float)$lims_purchase_data->total_discount, 2, '.', '')); ?></th>
+                                                    <th id="total-tax" class="d-none"><?php echo e(number_format((float)$lims_purchase_data->total_tax, 2, '.', '')); ?></th>
                                                     <th id="total"><?php echo e(number_format((float)$lims_purchase_data->total_cost, 2, '.', '')); ?></th>
                                                     <th><i class="dripicons-trash"></i></th>
                                                 </tfoot>
@@ -222,7 +220,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-5">
+                                <div class="row mt-5 d-none">
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label><?php echo e(trans('file.Order Tax')); ?></label>
@@ -629,8 +627,8 @@ function productSearch(data) {
                 else
                     cols += '<td class="recieved-product-qty d-none"><input type="number" class="form-control recieved" name="recieved[]" value="0" step="any"/></td>';
                 cols += '<td class="net_unit_cost"></td>';
-                cols += '<td class="discount">0.00</td>';
-                cols += '<td class="tax"></td>';
+                cols += '<td class="discount d-none">0.00</td>';
+                cols += '<td class="tax d-none"></td>';
                 cols += '<td class="sub-total"></td>';
                 cols += '<td><button type="button" class="ibtnDel btn btn-md btn-danger"><?php echo e(trans("file.delete")); ?></button></td>';
                 cols += '<input type="hidden" class="product-code" name="product_code[]" value="' + data[1] + '"/>';

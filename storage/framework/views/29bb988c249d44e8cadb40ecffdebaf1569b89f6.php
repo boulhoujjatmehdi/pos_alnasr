@@ -82,7 +82,7 @@
                         <tr>
                             <td><?php echo e($key); ?></td>
                             
-                            <td><?php echo e(date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($sale->created_at->toDateString())) . ' '. $sale->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($sale->reference_no); ?></td>
                             <td><?php echo e($sale->warehouse->name); ?></td>
                             <td>
@@ -190,7 +190,7 @@
                         <?php $__currentLoopData = $lims_return_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$return): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><?php echo e($key); ?></td>
-                            <td><?php echo e(date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($return->reference_no); ?></td>
                             <td><?php echo e($return->warehouse->name); ?></td>
                             <td><?php echo e($return->biller->name); ?></td>
@@ -255,7 +255,7 @@
                             <?php
                                 $supplier = DB::table('suppliers')->find($quotation->supplier_id);
                             ?>
-                            <td><?php echo e(date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString()); ?></td>
+                            <td><?php echo e(date($general_setting->date_format, strtotime($quotation->created_at->toDateString())) . ' '. $quotation->created_at->toTimeString('minute')); ?></td>
                             <td><?php echo e($quotation->reference_no); ?></td>
                             <td><?php echo e($quotation->warehouse->name); ?></td>
                             <?php if($supplier): ?>
