@@ -1724,6 +1724,9 @@ var unit_operation_value = [];
 var gift_card_amount = [];
 var gift_card_expense = [];
 
+// variable for items count 0
+var item_equal_zero = 0;
+
 // temporary array
 var temp_unit_name = [];
 var temp_unit_operator = [];
@@ -2171,11 +2174,13 @@ $("#myTable").on('click', '.plus', function() {
 
 $("#myTable").on('click', '.minus', function() {
     rowindex = $(this).closest('tr').index();
-    var qty = parseFloat($('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val()) - 1;
-    if (qty > 0) {
+    var qty = parseFloat($('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val());
+    if (qty > 1) {
+        qty--;
+        qty=qty.toFixed(2);
         $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val(qty);
     } else {
-        qty = 1;
+        qty;
     }
     checkQuantity(String(qty), true);
 });
@@ -2183,9 +2188,9 @@ $("#myTable").on('click', '.minus', function() {
 //Change quantity
 $("#myTable").on('input', '.qty', function() {
     rowindex = $(this).closest('tr').index();
-    if($(this).val() < 1 && $(this).val() != '') {
+    if($(this).val() < 0 && $(this).val() != '') {
       $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ') .qty').val(1);
-      alert("Quantity can't be less than 1");
+      alert("Quantity can't be equal or less than 0");
     }
     checkQuantity($(this).val(), true);
 });
@@ -2251,10 +2256,10 @@ $('button[name="update_btn"]').on("click", function() {
         return;
     }
 
-    if(edit_qty < 1) {
+    if(edit_qty <= 0) {
         $('input[name="edit_qty"]').val(1);
         edit_qty = 1;
-        alert("Quantity can't be less than 1");
+        alert("Quantity can't be equal or less than 0");
     }
     
     var tax_rate_all = <?php echo json_encode($tax_rate_all) ?>;
@@ -2315,10 +2320,12 @@ $(".payment-btn").on("click", function() {
 });
 
 $("#submit-btn").on("click", function() {
+
     $('.payment-form').submit();
 });
 
 $("#cash-btn").on("click",function() {
+
     $('select[name="paid_by_id_select"]').val(1);
     $('.selectpicker').selectpicker('refresh');
     $('div.qc').show();
@@ -2339,6 +2346,7 @@ $('#add-payment select[name="gift_card_id_select"]').on("change", function() {
 });
 
 $('#add-payment input[name="paying_amount"]').on("input", function() {
+
     change($(this).val(), $('input[name="paid_amount"]').val());
 });
 
@@ -2436,6 +2444,7 @@ function productSearch(data) {
             });
             $("input[name='product_code_name']").val('');
             if(flag){
+                
                 addNewProduct(data);
             }
         }
@@ -2583,7 +2592,7 @@ function checkQuantity(sale_qty, flag) {
     pos = product_code.indexOf(row_product_code);
     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.in-stock').text(product_qty[pos]);
     $('table.order-list tbody tr:nth-child(' + (rowindex + 1) + ')').find('.it-cost').text(product_cost[pos]);
-    console.log(product_cost[pos]);
+
     if(product_type[pos] == 'standard'){
         var operator = unit_operator[rowindex].split(',');
         var operation_value = unit_operation_value[rowindex].split(',');
@@ -2688,8 +2697,10 @@ function calculateTotal() {
     $("table.order-list tbody .qty").each(function(index) {
         if ($(this).val() == '') {
             total_qty += 0;
+            alert(total_qty);
         } else {
             total_qty += parseFloat($(this).val());
+            
         }
     });
     $('input[name="total_qty"]').val(total_qty);
@@ -2745,6 +2756,12 @@ function calculateGrandTotal() {
         coupon_discount = 0.00;
     grand_total -= coupon_discount;
 
+
+
+
+
+
+
     $('#item').text(item);
     $('input[name="item"]').val($('table.order-list tbody tr:last').index() + 1);
     $('#subtotal').text(subtotal.toFixed(2));
@@ -2799,6 +2816,16 @@ function confirmCancel() {
 }
 
 $(document).on('submit', '.payment-form', function(e) {
+    var zero_qty = 0;
+    $("table.order-list tbody .qty").each(function(index) {
+        if ($(this).val() == '0') {
+            zero_qty++;;   
+        } 
+    });
+    if(zero_qty!=0){
+        alert("Product quantity can't be 0!")
+        e.preventDefault();
+    }
     var rownumber = $('table.order-list tbody tr:last').index();
     if (rownumber < 0) {
         alert("Please insert product to order table!")

@@ -11,7 +11,7 @@
                         <p class="italic"><small><?php echo e(trans('file.The field labels marked with * are required input fields')); ?>.</small></p>
                         <form id="product-form">
                             <div class="row">
-                                <input type="hidden" id="type"name='type' value="Standard">
+                                <input type="hidden" id="type"name='type' value="standard">
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label><?php echo e(trans('file.Product Name')); ?> *</strong> </label>
