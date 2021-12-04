@@ -43,7 +43,7 @@
             border-collapse: collapse;
         }
         tr {border-bottom: 1px dotted #ddd;}
-        td,th {padding: 7px 0;width: 50%;}
+        td,th {padding: 7px 0;width: 10%; text-align: center;}
 
         table {width: 100%;}
         tfoot tr th:first-child {text-align: left;}
@@ -87,11 +87,13 @@
         
     <div id="receipt-data">
         <div class="centered">
-            @if($general_setting->site_logo)
+            {{-- @if(!$general_setting->site_logo)
                 <img src="{{url('/logo', $general_setting->site_logo)}}" height="42" width="42" style="margin:10px 0;filter: brightness(0);">
-            @endif
+            @endif --}}
+
             
-            <h2>{{$lims_biller_data->company_name}}</h2>
+            <h2>{{ $general_setting->site_title  }}</h2>
+            <h2>Plomberie - Sanitaire - Électricité - Peinture - Drougrie</h2   >
             
             <p>{{trans('file.Address')}}: {{$lims_warehouse_data->address}}
                 <br>{{trans('file.Phone Number')}}: {{$lims_warehouse_data->phone}}
@@ -101,19 +103,30 @@
             {{trans('file.reference')}}: {{$lims_sale_data->reference_no}}<br>
             {{trans('file.customer')}}: {{$lims_customer_data->name}}
         </p>
-        <table>
+        <table  >
             <tbody>
                 <?php $total_product_tax = 0;?>
+
+                <tr style="border: 1px solid black;">
+
+                    <td >qty</td>
+                    <td colspan="1" style="border: 1px solid black; width:75%;text-align:left;">nome</td>
+                    <td colspan="1" style="border: 1px solid black;">PU</td>
+                    <td colspan="1" style="border: 1px solid black;">PT</td>
+                </tr>
                 @foreach($lims_product_sale_data as $product_sale_data)
                 <?php 
                     $lims_product_data = \App\Product::find($product_sale_data->product_id);
                     $product_name = $lims_product_data->name;
                 ?>
-                <tr>
-                    <td colspan="2">
-                        {{$product_sale_data->qty}}&nbsp; x &nbsp; {{$product_name}}
+                <tr style="border: 1px solid black;">
+                    <td>
+                        {{$product_sale_data->qty}}
                     </td>
-                     <td colspan="2">
+                    <td colspan="1" style="border: 1px solid black; text-align:left;">
+                        {{$product_name}}
+                    </td>
+                     <td colspan="1" style="border: 1px solid black;">
                         {{number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')}}
 
                         @if($product_sale_data->tax_rate)
@@ -121,14 +134,15 @@
                             [{{trans('file.Tax')}} ({{$product_sale_data->tax_rate}}%): {{$product_sale_data->tax}}]
                         @endif
                     </td>
-                    <td style="text-align:right;vertical-align:bottom">{{number_format((float)$product_sale_data->total, 2, '.', '')}}</td>
+                    <td colspan="1" style="border: 1px solid black;">{{number_format((float)$product_sale_data->total, 2, '.', '')}}</td>
+                    {{-- style="text-align:right;vertical-align:bottom" --}}
                 </tr>
                 @endforeach
             </tbody>
             <tfoot>
-                <tr>
+                <tr style=" border-bottom: 1px solid black;">
                     <th colspan="2">{{trans('file.Total')}}</th>
-                    <th colspan="3" style="text-align:right">{{number_format((float)$lims_sale_data->total_price, 2, '.', '')}}</th>
+                    <th colspan="3" style="text-align:right;">{{number_format((float)$lims_sale_data->total_price, 2, '.', '')}}</th>
                 </tr>
                 @if($general_setting->invoice_format == 'gst' && $general_setting->state == 1)
                 <tr>
@@ -146,14 +160,11 @@
                 </tr>
                 @endif
 
-                <tr>
-                    <th colspan="2">{{trans('file.grand total')}}</th>
-                    <th colspan="3" style="text-align:right">{{number_format((float)$lims_sale_data->grand_total, 2, '.', '')}}</th>
-                </tr>
+
 
             </tfoot>
         </table>
-        <table>
+        <table style="margin-top:10px;">
             @php
                 $credit = $lims_sale_data->grand_total;
             @endphp
@@ -163,10 +174,10 @@
                 @php
                     $credit = $credit-$payment_data->amount;
                 @endphp
-                <tr style="background-color:#ddd;">
-                    <td style="padding: 5px;width:40%">{{trans('file.Date')}}: {{$payment_data->created_at}}</td>
-                    <td style="padding: 5px;width:40%">{{trans('file.Amount')}}: {{number_format((float)$payment_data->amount, 2, '.', '')}}</td>
-                    <td style="padding: 5px;width:20%">{{trans('file.Credit')}}: {{number_format((float)$credit, 2, '.', '')}}</td>
+                <tr style="background-color:#ddd; border:1px solid black">
+                    <td style="padding: 5px;width:40%; text-align:left;">{{trans('file.Date')}}: {{$payment_data->created_at->format('Y-m-d')}}</td>
+                    <td style="padding: 5px;width:40%">{{trans('file.Amountt')}}: {{number_format((float)$payment_data->amount, 2, '.', '')}}</td>
+                    <td style="padding: 5px;width:20%; text-align:right;">{{trans('file.Credit')}}: {{number_format((float)$credit, 2, '.', '')}}</td>
                 </tr>                
                 @endforeach
                 <tr><td class="centered" colspan="3">{{trans('file.Thank you for shopping with us. Please come again')}}</td></tr>

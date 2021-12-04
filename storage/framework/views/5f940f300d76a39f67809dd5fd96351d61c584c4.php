@@ -1724,9 +1724,6 @@ var unit_operation_value = [];
 var gift_card_amount = [];
 var gift_card_expense = [];
 
-// variable for items count 0
-var item_equal_zero = 0;
-
 // temporary array
 var temp_unit_name = [];
 var temp_unit_operator = [];
@@ -2320,12 +2317,10 @@ $(".payment-btn").on("click", function() {
 });
 
 $("#submit-btn").on("click", function() {
-
     $('.payment-form').submit();
 });
 
 $("#cash-btn").on("click",function() {
-
     $('select[name="paid_by_id_select"]').val(1);
     $('.selectpicker').selectpicker('refresh');
     $('div.qc').show();
@@ -2346,7 +2341,6 @@ $('#add-payment select[name="gift_card_id_select"]').on("change", function() {
 });
 
 $('#add-payment input[name="paying_amount"]').on("input", function() {
-
     change($(this).val(), $('input[name="paid_amount"]').val());
 });
 
@@ -2444,7 +2438,6 @@ function productSearch(data) {
             });
             $("input[name='product_code_name']").val('');
             if(flag){
-                
                 addNewProduct(data);
             }
         }
@@ -2697,10 +2690,8 @@ function calculateTotal() {
     $("table.order-list tbody .qty").each(function(index) {
         if ($(this).val() == '') {
             total_qty += 0;
-            alert(total_qty);
         } else {
             total_qty += parseFloat($(this).val());
-            
         }
     });
     $('input[name="total_qty"]').val(total_qty);
@@ -2755,12 +2746,6 @@ function calculateGrandTotal() {
     if (!coupon_discount)
         coupon_discount = 0.00;
     grand_total -= coupon_discount;
-
-
-
-
-
-
 
     $('#item').text(item);
     $('input[name="item"]').val($('table.order-list tbody tr:last').index() + 1);

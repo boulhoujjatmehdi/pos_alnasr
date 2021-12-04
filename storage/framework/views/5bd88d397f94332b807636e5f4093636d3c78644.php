@@ -43,7 +43,7 @@
             border-collapse: collapse;
         }
         tr {border-bottom: 1px dotted #ddd;}
-        td,th {padding: 7px 0;width: 50%;}
+        td,th {padding: 7px 0;width: 10%; text-align: center;}
 
         table {width: 100%;}
         tfoot tr th:first-child {text-align: left;}
@@ -87,11 +87,11 @@
         
     <div id="receipt-data">
         <div class="centered">
-            <?php if($general_setting->site_logo): ?>
-                <img src="<?php echo e(url('/logo', $general_setting->site_logo)); ?>" height="42" width="42" style="margin:10px 0;filter: brightness(0);">
-            <?php endif; ?>
             
-            <h2><?php echo e($lims_biller_data->company_name); ?></h2>
+
+            
+            <h2><?php echo e($general_setting->site_title); ?></h2>
+            <h2>Plomberie - Sanitaire - Électricité - Peinture - Drougrie</h2>
             
             <p><?php echo e(trans('file.Address')); ?>: <?php echo e($lims_warehouse_data->address); ?>
 
@@ -104,20 +104,32 @@
             <?php echo e(trans('file.customer')); ?>: <?php echo e($lims_customer_data->name); ?>
 
         </p>
-        <table>
+        <table  >
             <tbody>
                 <?php $total_product_tax = 0;?>
+
+                <tr style="border: 1px solid black;">
+
+                    <td >qty</td>
+                    <td colspan="1" style="border: 1px solid black; width:75%;text-align:left;">nome</td>
+                    <td colspan="1" style="border: 1px solid black;">PU</td>
+                    <td colspan="1" style="border: 1px solid black;">PT</td>
+                </tr>
                 <?php $__currentLoopData = $lims_product_sale_data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product_sale_data): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <?php 
                     $lims_product_data = \App\Product::find($product_sale_data->product_id);
                     $product_name = $lims_product_data->name;
                 ?>
-                <tr>
-                    <td colspan="2">
-                        <?php echo e($product_sale_data->qty); ?>&nbsp; x &nbsp; <?php echo e($product_name); ?>
+                <tr style="border: 1px solid black;">
+                    <td>
+                        <?php echo e($product_sale_data->qty); ?>
 
                     </td>
-                     <td colspan="2">
+                    <td colspan="1" style="border: 1px solid black; text-align:left;">
+                        <?php echo e($product_name); ?>
+
+                    </td>
+                     <td colspan="1" style="border: 1px solid black;">
                         <?php echo e(number_format((float)($product_sale_data->total / $product_sale_data->qty), 2, '.', '')); ?>
 
 
@@ -126,14 +138,15 @@
                             [<?php echo e(trans('file.Tax')); ?> (<?php echo e($product_sale_data->tax_rate); ?>%): <?php echo e($product_sale_data->tax); ?>]
                         <?php endif; ?>
                     </td>
-                    <td style="text-align:right;vertical-align:bottom"><?php echo e(number_format((float)$product_sale_data->total, 2, '.', '')); ?></td>
+                    <td colspan="1" style="border: 1px solid black;"><?php echo e(number_format((float)$product_sale_data->total, 2, '.', '')); ?></td>
+                    
                 </tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </tbody>
             <tfoot>
-                <tr>
+                <tr style=" border-bottom: 1px solid black;">
                     <th colspan="2"><?php echo e(trans('file.Total')); ?></th>
-                    <th colspan="3" style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->total_price, 2, '.', '')); ?></th>
+                    <th colspan="3" style="text-align:right;"><?php echo e(number_format((float)$lims_sale_data->total_price, 2, '.', '')); ?></th>
                 </tr>
                 <?php if($general_setting->invoice_format == 'gst' && $general_setting->state == 1): ?>
                 <tr>
@@ -151,14 +164,11 @@
                 </tr>
                 <?php endif; ?>
 
-                <tr>
-                    <th colspan="2"><?php echo e(trans('file.grand total')); ?></th>
-                    <th colspan="3" style="text-align:right"><?php echo e(number_format((float)$lims_sale_data->grand_total, 2, '.', '')); ?></th>
-                </tr>
+
 
             </tfoot>
         </table>
-        <table>
+        <table style="margin-top:10px;">
             <?php
                 $credit = $lims_sale_data->grand_total;
             ?>
@@ -168,10 +178,10 @@
                 <?php
                     $credit = $credit-$payment_data->amount;
                 ?>
-                <tr style="background-color:#ddd;">
-                    <td style="padding: 5px;width:40%"><?php echo e(trans('file.Date')); ?>: <?php echo e($payment_data->created_at); ?></td>
-                    <td style="padding: 5px;width:40%"><?php echo e(trans('file.Amount')); ?>: <?php echo e(number_format((float)$payment_data->amount, 2, '.', '')); ?></td>
-                    <td style="padding: 5px;width:20%"><?php echo e(trans('file.Credit')); ?>: <?php echo e(number_format((float)$credit, 2, '.', '')); ?></td>
+                <tr style="background-color:#ddd; border:1px solid black">
+                    <td style="padding: 5px;width:40%; text-align:left;"><?php echo e(trans('file.Date')); ?>: <?php echo e($payment_data->created_at->format('Y-m-d')); ?></td>
+                    <td style="padding: 5px;width:40%"><?php echo e(trans('file.Amountt')); ?>: <?php echo e(number_format((float)$payment_data->amount, 2, '.', '')); ?></td>
+                    <td style="padding: 5px;width:20%; text-align:right;"><?php echo e(trans('file.Credit')); ?>: <?php echo e(number_format((float)$credit, 2, '.', '')); ?></td>
                 </tr>                
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 <tr><td class="centered" colspan="3"><?php echo e(trans('file.Thank you for shopping with us. Please come again')); ?></td></tr>

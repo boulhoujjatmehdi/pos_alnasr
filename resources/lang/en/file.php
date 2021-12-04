@@ -100,6 +100,7 @@ return [
 	'To' => 'To',
 	'Created By' => 'Created By',
 	'Amount' => 'Amount',
+	'Amountt' => 'Amount',
 	'Staff' => 'Staff',
 	'Quotation' => 'Quotation',
 	'Create' => 'Create',
