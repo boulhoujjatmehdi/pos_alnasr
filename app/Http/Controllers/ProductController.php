@@ -26,7 +26,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        error_log('index');
+        // error_log('index');
         $role = Role::find(Auth::user()->role_id);
         if($role->hasPermissionTo('products-index')){            
             $permissions = Role::findByName($role->name)->permissions;
@@ -42,7 +42,7 @@ class ProductController extends Controller
 
     public function productData(Request $request)
     {
-        error_log('test11');
+        // error_log('test11');
         $columns = array( 
             2 => 'name', 
             3 => 'code',
@@ -195,7 +195,7 @@ class ProductController extends Controller
     
     public function create()
     {
-        error_log('create.');
+        // error_log('create.');
 
         $role = Role::firstOrCreate(['id' => Auth::user()->role_id]);
         if ($role->hasPermissionTo('products-add')){
@@ -213,7 +213,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        error_log('store');
+        // error_log('store');
         $this->validate($request, [
             'code' => [
                 'max:255',
@@ -257,6 +257,7 @@ class ProductController extends Controller
                 $imageName = $image->getClientOriginalName();
                 $image->move(public_path('/images/product'), $imageName);
                 $image_names[] = $imageName;
+                
             }
             $data['image'] = implode(",", $image_names);
         }
@@ -273,8 +274,9 @@ class ProductController extends Controller
         }
         
         $lims_product_data = Product::create($data);
-        error_log($lims_product_data);
-        error_log('$lims_product_data');
+
+
+        // error_log('$lims_product_data');
         //dealing with product variant
         // if(isset($data['is_variant'])) {
         //     foreach ($data['variant_name'] as $key => $variant_name) {
@@ -309,7 +311,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        error_log('edit.');
+        // error_log('edit.');
 
         $role = Role::firstOrCreate(['id' => Auth::user()->role_id]);
         if ($role->hasPermissionTo('products-edit')) {
@@ -384,7 +386,7 @@ class ProductController extends Controller
             if($request->prev_img) {
                 $lims_product_data->image = implode(",", $request->prev_img);
                 $lims_product_data->save();
-                error_log($lims_product_data->image);
+                // error_log($lims_product_data->image);
             }else{
                 $lims_product_data->image = 'zummXD2dvAtI.png';
                 $lims_product_data->save();

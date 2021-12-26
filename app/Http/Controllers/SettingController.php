@@ -80,7 +80,7 @@ class SettingController extends Controller
         $logo = $request->site_logo;
         if ($logo) {
             $logoName = $logo->getClientOriginalName();
-            $logo->move('public/logo', $logoName);
+            $logo->move(public_path('public/logo'), $logoName);
             $general_setting->site_logo = $logoName;
         }
         $general_setting->save();
