@@ -689,10 +689,10 @@
     <div class="container-fluid">
         <div class="row">
             <audio id="mysoundclip1" preload="auto">
-                <source src="{{url('/beep/beep-timber.mp3')}}"></source>
+                <source src="{{url('/beep/beep-timber.mp3')}}"/>
             </audio>
             <audio id="mysoundclip2" preload="auto">
-                <source src="{{url('/beep/beep-07.mp3')}}"></source>
+                <source src="{{url('/beep/beep-07.mp3')}}"/>
             </audio>
             <div class="col-md-6">
                 <div class="card">
@@ -861,10 +861,13 @@
                             <button style="background: #00cec9" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cash-btn"><i class="fa fa-money"></i> Cash</button>
                         </div>
                         <div class="column-5">
-                            <button style="background-color: #d63031;" type="button" class="btn btn-custom" id="cancel-btn" onclick="return confirmCancel()"><i class="fa fa-close"></i> Cancel</button>
+                            <button style="background-color: #e28d02" type="button" class="btn btn-custom" id="draft-btn"><i class="dripicons-flag"></i> Draft</button>
                         </div>
                         <div class="column-5">
                             <button style="background-color: #ffc107;" type="button" class="btn btn-custom" data-toggle="modal" data-target="#recentTransaction"><i class="dripicons-clock"></i> Recent transaction</button>
+                        </div>
+                        <div class="column-5">
+                            <button style="background-color: #d63031;" type="button" class="btn btn-custom" id="cancel-btn" onclick="return confirmCancel()"><i class="fa fa-close"></i> Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -2291,6 +2294,19 @@ $(".payment-btn").on("click", function() {
     $('input[name="paid_amount"]').val($("#grand-total").text());
     $('input[name="paying_amount"]').val($("#grand-total").text());
     $('.qc').data('initial', 1);
+});
+$("#draft-btn").on("click",function(){
+    var audio = $("#mysoundclip2")[0];
+    audio.play();
+    $('input[name="sale_status"]').val(3);
+    $('input[name="paying_amount"]').prop('required',false);
+    $('input[name="paid_amount"]').prop('required',false);
+    var rownumber = $('table.order-list tbody tr:last').index();
+    if (rownumber < 0) {
+        alert("Please insert product to order table!")
+    }
+    else
+        $('.payment-form').submit();
 });
 
 $("#submit-btn").on("click", function() {

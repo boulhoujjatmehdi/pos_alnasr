@@ -122,14 +122,14 @@ Route::group(['middleware' => ['auth', 'active']], function() {
 
 
 
-	// Route::get('quotations/product_quotation/{id}','QuotationController@productQuotationData');
-	// Route::get('quotations/lims_product_search', 'QuotationController@limsProductSearch')->name('product_quotation.search');
-	// Route::get('quotations/getcustomergroup/{id}', 'QuotationController@getCustomerGroup')->name('quotation.getcustomergroup');
-	// Route::get('quotations/getproduct/{id}', 'QuotationController@getProduct')->name('quotation.getproduct');
-	// Route::get('quotations/{id}/create_sale', 'QuotationController@createSale')->name('quotation.create_sale');
-	// Route::get('quotations/{id}/create_purchase', 'QuotationController@createPurchase')->name('quotation.create_purchase');
-	// Route::post('quotations/sendmail', 'QuotationController@sendMail')->name('quotation.sendmail');
-	// Route::post('quotations/deletebyselection', 'QuotationController@deleteBySelection');
+	Route::get('quotations/product_quotation/{id}','QuotationController@productQuotationData');
+	Route::get('quotations/lims_product_search', 'QuotationController@limsProductSearch')->name('product_quotation.search');
+	Route::get('quotations/getcustomergroup/{id}', 'QuotationController@getCustomerGroup')->name('quotation.getcustomergroup');
+	Route::get('quotations/getproduct/{id}', 'QuotationController@getProduct')->name('quotation.getproduct');
+	Route::get('quotations/{id}/create_sale', 'QuotationController@createSale')->name('quotation.create_sale');
+	Route::get('quotations/{id}/create_purchase', 'QuotationController@createPurchase')->name('quotation.create_purchase');
+	Route::post('quotations/sendmail', 'QuotationController@sendMail')->name('quotation.sendmail');
+	Route::post('quotations/deletebyselection', 'QuotationController@deleteBySelection');
 	Route::resource('quotations', 'QuotationController');
 
 	Route::post('purchases/purchase-data', 'PurchaseController@purchaseData');
